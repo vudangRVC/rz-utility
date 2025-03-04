@@ -1,2 +1,2 @@
-# rz-utils
-Collection of utilities for various workflows related Renesas RZ based devices
+# rz-utility
+The RZ utilities for development
