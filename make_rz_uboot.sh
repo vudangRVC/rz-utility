@@ -26,7 +26,6 @@ TFA_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
 TFA_BRANCH="load-multi-dtb"
 # TFA_COMMIT="40654149b5b8768aeaf8cebef9529a0be7118bbe"
 
-
 #===============MAIN BODY NO NEED TO CHANGE=========================
 help() {
 bn=$(basename $0)
@@ -193,13 +192,11 @@ function fip_create(){
         mk_atf
         cd ${WORKPWD}
     fi
-    # cp ${WORKPWD}/${TFA_DIR}/build/g2l/${BUILDMODE}/bl31.bin ${WORKPWD}
 
     if [ ! -f ${WORKPWD}/${UBOOT_DIR}/u-boot.bin ]; then
         mk_uboot
         cd ${WORKPWD}
     fi
-    cp ${WORKPWD}/${UBOOT_DIR}/u-boot.bin ${WORKPWD}
 
     if [ ! -d ${WORKPWD}/cm33 ]; then
         echo "Error: cm33 is not exist"
@@ -211,15 +208,15 @@ function fip_create(){
     --soc-fw ${WORKPWD}/${TFA_DIR}/build/g2l/${BUILDMODE}/bl31.bin \
     --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzpi.dtb \
     --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot.bin \
-    --fw-config cm33/rzv2l_cm33_rpmsg_demo_secure_code.bin \
-    --hw-config cm33/rzv2l_cm33_rpmsg_demo_non_secure_vector.bin \
-    --soc-fw-config cm33/rzv2l_cm33_rpmsg_demo_secure_vector.bin \
-    --rmm-fw cm33/rzv2l_cm33_rpmsg_demo_non_secure_code.bin fip-rzpi.bin
+    --fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_code.bin \
+    --hw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_non_secure_vector.bin \
+    --soc-fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_vector.bin \
+    --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzpi.dtb fip-rzpi.bin
 
     ./fiptool info fip-rzpi.bin
 
     objcopy -I binary -O srec --adjust-vma=0x00000000 --srec-forceS3 fip-rzpi.bin fip-rzpi.srec
-    rm fip-rzpi.bin bl31.bin
+    rm fip-rzpi.bin
 }
 
 function main_process(){
