@@ -24,7 +24,6 @@ UBOOT_BRANCH="load-multi-dtb"
 TFA_DIR="trusted-firmware-a"
 TFA_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
 TFA_BRANCH="load-multi-dtb"
-# TFA_COMMIT="40654149b5b8768aeaf8cebef9529a0be7118bbe"
 
 #===============MAIN BODY NO NEED TO CHANGE=========================
 help() {
@@ -98,13 +97,16 @@ mk_getcode()
 {
     cd ${WORKPWD}/
     #download uboot
-    git clone $UBOOT_GIT_URL ${UBOOT_DIR}
-    git -C ${UBOOT_DIR} checkout ${UBOOT_BRANCH}
+    if [ ! -d ${UBOOT_DIR} ];then
+        git clone $UBOOT_GIT_URL ${UBOOT_DIR}
+        git -C ${UBOOT_DIR} checkout ${UBOOT_BRANCH}
+    fi
 
     #download trusted-firmware-a
-    git clone $TFA_GIT_URL ${TFA_DIR}
-    git -C ${TFA_DIR} checkout ${TFA_BRANCH}
-
+    if [ ! -d ${TFA_DIR} ];then
+        git clone $TFA_GIT_URL ${TFA_DIR}
+        git -C ${TFA_DIR} checkout ${TFA_BRANCH}
+    fi
     #download extra tool code
     if [ ! -d bootparameter_dir ];then
         mkdir bootparameter_dir
