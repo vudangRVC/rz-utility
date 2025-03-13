@@ -209,7 +209,7 @@ function fip_create(){
     ./fiptool create --align 16 \
     --soc-fw ${WORKPWD}/${TFA_DIR}/build/g2l/${BUILDMODE}/bl31.bin \
     --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzpi.dtb \
-    --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot.bin \
+    --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot-nodtb.bin \
     --fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_code.bin \
     --hw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_non_secure_vector.bin \
     --soc-fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_vector.bin \
