@@ -25,6 +25,9 @@ TFA_DIR="trusted-firmware-a"
 TFA_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
 TFA_BRANCH="load-multi-dtb"
 
+# bootparameter
+BOOT_PARAMETER_DIR="bootparameter_dir"
+
 #===============MAIN BODY NO NEED TO CHANGE=========================
 help() {
 bn=$(basename $0)
@@ -107,10 +110,11 @@ mk_getcode()
         git clone $TFA_GIT_URL ${TFA_DIR}
         git -C ${TFA_DIR} checkout ${TFA_BRANCH}
     fi
+
     #download extra tool code
-    if [ ! -d bootparameter_dir ];then
-        mkdir bootparameter_dir
-        cd bootparameter_dir
+    if [ ! -d ${BOOT_PARAMETER_DIR} ];then
+        mkdir ${BOOT_PARAMETER_DIR}
+        cd ${BOOT_PARAMETER_DIR}
         wget https://raw.githubusercontent.com/renesas-rz/meta-renesas/dunfell/rz/meta-rz-common/recipes-bsp/firmware-pack/bootparameter/bootparameter.c
     fi
     cd ${WORKPWD}/
@@ -164,15 +168,13 @@ bl2_create()
     fi
     cp ${WORKPWD}/${TFA_DIR}/build/g2l/${BUILDMODE}/bl2.bin ${WORKPWD}
 
-    if [ ! -f bootparameter ];then
-        cd ${WORKPWD}/bootparameter_dir/
+    if [ ! -f ${BOOT_PARAMETER_DIR}/bootparameter ];then
+        cd ${WORKPWD}/${BOOT_PARAMETER_DIR}/
         gcc bootparameter.c -o bootparameter
-        cp -af bootparameter ${WORKPWD}/
-        echo "copy bootparameter "
         cd ${WORKPWD}
     fi
 
-    ./bootparameter ${WORKPWD}/bl2.bin bl2_bp.bin
+    ./${BOOT_PARAMETER_DIR}/bootparameter ${WORKPWD}/bl2.bin bl2_bp.bin
     cat ${WORKPWD}/bl2.bin >> bl2_bp.bin
     mv bl2_bp.bin bl2_bp-rzpi.bin
     objcopy -O srec --adjust-vma=0x00011E00 --srec-forceS3 -I binary bl2_bp-rzpi.bin bl2_bp-rzpi.srec
