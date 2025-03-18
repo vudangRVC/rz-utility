@@ -207,13 +207,21 @@ function fip_create(){
         exit
     fi
 
+    # Address		    Size		Binary File Path											    Binary Type
+    # 0x00010000		0x7C0		${WORKPWD}/cm33/board_info.txt                          		--hw-config
+    # 0x0001FF80		0x40		${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_vector.bin			--soc-fw-config
+    # 0x42EFF440		0x180		${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_code.bin			--fw-config
+    # 0x40010000		0x7030		${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzpi.dtb					--rmm-fw
+    # 0x44000000		0x6069		${WORKPWD}/${TFA_DIR}/build/g2l/${BUILDMODE}/bl31.bin			--soc-fw
+    # 0x48000000		0xAD018		${WORKPWD}/${UBOOT_DIR}/u-boot-nodtb.bin						--nt-fw
+    # 0x48080000		0x7030		${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2l.dtb			--nt-fw-config
     chmod 777 fiptool
     ./fiptool create --align 16 \
     --soc-fw ${WORKPWD}/${TFA_DIR}/build/g2l/${BUILDMODE}/bl31.bin \
-    --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzpi.dtb \
+    --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2l.dtb \
     --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot-nodtb.bin \
     --fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_code.bin \
-    --hw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_non_secure_vector.bin \
+    --hw-config ${WORKPWD}/board_info.txt \
     --soc-fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_vector.bin \
     --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzpi.dtb fip-rzpi.bin
 
