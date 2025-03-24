@@ -19,11 +19,13 @@ WORKPWD=$(pwd)
 UBOOT_DIR="uboot"
 UBOOT_GIT_URL="git@github.com:vudangRVC/u-boot-sst.git"
 UBOOT_BRANCH="load-multi-dtb"
+UBOOT_COMMIT="e8310e4f0a55918424594e0936ac8901e24dfda5"
 
 # ATF
 TFA_DIR="trusted-firmware-a"
 TFA_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
 TFA_BRANCH="load-multi-dtb"
+TFA_COMMIT="ecbf57fcea08a1b80354acbe362708732258aa37"
 
 # bootparameter
 BOOT_PARAMETER_DIR="bootparameter_dir"
@@ -202,28 +204,25 @@ function fip_create(){
         cd ${WORKPWD}
     fi
 
-    if [ ! -d ${WORKPWD}/cm33 ]; then
-        echo "Error: cm33 is not exist"
-        exit
-    fi
+    # Address    Binary File Path
+    # 0x44000000 trusted-firmware-a/build/g2l/release/bl31.bin
+    # 0x44100000 board_info.txt
+    # 0x44200000 uboot/arch/arm/dts/smarc-rzg2lc.dtb
+    # 0x44300000 uboot/arch/arm/dts/smarc-rzv2l.dtb
+    # 0x44400000 uboot/arch/arm/dts/rzpi.dtb
+    # 0x44500000 uboot/arch/arm/dts/smarc-rzg2l.dtb
+    # 0x48080000 uboot/u-boot-nodtb.bin
 
-    # Address		    Size		Binary File Path											    Binary Type
-    # 0x00010000		0x7C0		${WORKPWD}/cm33/board_info.txt                          		--hw-config
-    # 0x0001FF80		0x40		${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_vector.bin			--soc-fw-config
-    # 0x42EFF440		0x180		${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_code.bin			--fw-config
-    # 0x40010000		0x7030		${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzpi.dtb					--rmm-fw
-    # 0x44000000		0x6069		${WORKPWD}/${TFA_DIR}/build/g2l/${BUILDMODE}/bl31.bin			--soc-fw
-    # 0x48000000		0xAD018		${WORKPWD}/${UBOOT_DIR}/u-boot-nodtb.bin						--nt-fw
-    # 0x48080000		0x7030		${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2l.dtb			--nt-fw-config
     chmod 777 fiptool
     ./fiptool create --align 16 \
     --soc-fw ${WORKPWD}/${TFA_DIR}/build/g2l/${BUILDMODE}/bl31.bin \
+    --fw-config ${WORKPWD}/board_info.txt \
+    --hw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2lc.dtb \
+    --soc-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb \
+    --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzpi.dtb \
     --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2l.dtb \
     --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot-nodtb.bin \
-    --fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_code.bin \
-    --hw-config ${WORKPWD}/board_info.txt \
-    --soc-fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_vector.bin \
-    --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzpi.dtb fip-rzpi.bin
+    fip-rzpi.bin
 
     ./fiptool info fip-rzpi.bin
 
