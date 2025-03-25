@@ -127,14 +127,31 @@ mk_bootimage()
     cp bl2_bp_${SOC_TYPE}.srec ${WORKPWD}
 
     # Create fip.bin
-    cp ../${UBOOT_DIR}/u-boot.bin ./
-    ./fiptool create --align 16 --soc-fw build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
-    --nt-fw ./u-boot.bin fip.bin
+    # cp ../${UBOOT_DIR}/u-boot.bin ./
+    # ./fiptool create --align 16 --soc-fw build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
+    # --nt-fw ./u-boot.bin fip.bin
     
+    # # Convert to srec
+    # objcopy -I binary -O srec --adjust-vma=0x0000 --srec-forceS3 fip.bin fip_${SOC_TYPE}.srec
+    # cp fip_${SOC_TYPE}.srec ${WORKPWD}
+    # cd ${WORKPWD}
+
+
+    ./fiptool create --align 16 \
+    --soc-fw ${WORKPWD}/${TFA_DIR}/build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
+    --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb \
+    --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot.bin \
+    --fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_code.bin \
+    --hw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_non_secure_vector.bin \
+    --soc-fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_vector.bin \
+    --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb fip.bin
+   
+    ./fiptool info fip.bin
     # Convert to srec
     objcopy -I binary -O srec --adjust-vma=0x0000 --srec-forceS3 fip.bin fip_${SOC_TYPE}.srec
     cp fip_${SOC_TYPE}.srec ${WORKPWD}
     cd ${WORKPWD}
+
 
 }
 

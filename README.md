@@ -14,4 +14,4 @@ sudo pip3 install pyserial
 ./merge_ipl_file.sh v2l
 
 # burn_IPL
-./write_ipl.sh v2l
+sudo ./write_ipl.sh
