@@ -127,24 +127,25 @@ mk_bootimage()
     cp bl2_bp_${SOC_TYPE}.srec ${WORKPWD}
 
     # Create fip.bin
-    # cp ../${UBOOT_DIR}/u-boot.bin ./
-    # ./fiptool create --align 16 --soc-fw build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
-    # --nt-fw ./u-boot.bin fip.bin
-    
-    # # Convert to srec
-    # objcopy -I binary -O srec --adjust-vma=0x0000 --srec-forceS3 fip.bin fip_${SOC_TYPE}.srec
-    # cp fip_${SOC_TYPE}.srec ${WORKPWD}
-    # cd ${WORKPWD}
+    # Address    Binary File Path
+    # 0x44000000 trusted-firmware-a/build/g2l/release/bl31.bin
+    # 0x44100000 board_info.txt
+    # 0x44200000 uboot/arch/arm/dts/smarc-rzg2lc.dtb
+    # 0x44300000 uboot/arch/arm/dts/smarc-rzv2l.dtb
+    # 0x44400000 uboot/arch/arm/dts/rzpi.dtb
+    # 0x44500000 uboot/arch/arm/dts/smarc-rzg2l.dtb
+    # 0x48080000 uboot/u-boot-nodtb.bin
 
-
+    chmod 777 fiptool
     ./fiptool create --align 16 \
     --soc-fw ${WORKPWD}/${TFA_DIR}/build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
-    --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb \
-    --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot.bin \
-    --fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_code.bin \
-    --hw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_non_secure_vector.bin \
-    --soc-fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_vector.bin \
-    --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb fip.bin
+    --fw-config ${WORKPWD}/board_info.txt \
+    --hw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2lc.dtb \
+    --soc-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb \
+    --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2ul.dtb \
+    --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2l.dtb \
+    --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot-nodtb.bin \
+    fip.bin
    
     ./fiptool info fip.bin
     # Convert to srec

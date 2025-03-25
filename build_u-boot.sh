@@ -15,8 +15,8 @@ WORKPWD=$(pwd)
 UBOOT_DIR="uboot"
 
 UBOOT_GIT_URL="git@github.com:vudangRVC/u-boot-sst.git"
-UBOOT_BRANCH="dunfell/rz-sbc"
-UBOOT_COMMIT="7fcc1fdc253400f8b088ea10de30b865a32b957a"
+UBOOT_BRANCH="rzv2l-multi-dtb"
+UBOOT_COMMIT="36bfaf82279ecd87ed918550b5de505091768bb7"
 
 getcode_u-boot()
 {
