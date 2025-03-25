@@ -1,11 +1,17 @@
-# rz-utility
-The RZ utilities for development
+# rzv2l_ipl_build_script
+Build IPL for rzv2l board
 
-# download cm33 folder
+# Install env
+sudo apt update
+sudo apt install binwalk -y
+sudo apt install python3-pip -y
+sudo pip3 install pyserial
 
-# Get soure code
-./make_rz_uboot.sh -g
+# build
+./build_flash_writer.sh v2l
+./build_atf.sh v2l
+./build_u-boot.sh v2l
+./merge_ipl_file.sh v2l
 
-# Build IPL for rzpi
-./make_rz_uboot.sh -rzpi
-
+# burn_IPL
+./write_ipl.sh v2l

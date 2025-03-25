@@ -1,0 +1,5 @@
+33
+#define BOARD_ID_RZG2LC 				22
+#define BOARD_ID_RZV2L 					33
+#define BOARD_ID_RZPI  					44
+#define BOARD_ID_RZG2L 					55
