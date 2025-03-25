@@ -13,7 +13,7 @@ fi
 
 #=============== MARCO ==============================================
 WORKPWD=$(pwd)
-UBOOT_DIR="u-boot"
+UBOOT_DIR="uboot"
 TFA_DIR="trusted-firmware-a"
 BOOTPARAMETER_DIR="bootparameter_dir"
 
@@ -110,18 +110,6 @@ check_extra_tools()
     fi
 }
 
-# Merge u-boot and dtb
-# merge_u_boot_dtb()
-# {
-# 	echo "======== Merge u-boot and dtb ========"
-# 	cd ${WORKPWD}/${UBOOT_DIR}/
-# 	cat u-boot-nodtb.bin arch/arm/dts/rz-common.dtb > u-boot-01.bin
-# 	cat u-boot-01.bin arch/arm/dts/smarc-rzg2l.dtb > u-boot-02.bin
-# 	cat u-boot-02.bin arch/arm/dts/smarc-rzv2l.dtb > u-boot.bin
-# 	binwalk u-boot.bin
-# }
-
-
 mk_bootimage()
 {
     SOC_TYPE=$1
@@ -130,37 +118,24 @@ mk_bootimage()
 
     ## BUILDMODE=debug
     BUILDMODE=release
+
     # Create bl2_bp.bin
     ./bootparameter build/${SOC_TYPE}/${BUILDMODE}/bl2.bin bl2_bp.bin
     cat build/${SOC_TYPE}/${BUILDMODE}/bl2.bin >> bl2_bp.bin
+    # Convert to srec
+    objcopy -O srec --adjust-vma=0x00011E00 --srec-forceS3 -I binary bl2_bp.bin bl2_bp_${SOC_TYPE}.srec
+    cp bl2_bp_${SOC_TYPE}.srec ${WORKPWD}
 
     # Create fip.bin
-    # cp ../${UBOOT_DIR}/u-boot.bin ./
-    # ./fiptool create --align 16 --soc-fw build/v2l/${BUILDMODE}/bl31.bin --nt-fw ./u-boot.bin fip.bin
+    cp ../${UBOOT_DIR}/u-boot.bin ./
+    ./fiptool create --align 16 --soc-fw build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
+    --nt-fw ./u-boot.bin fip.bin
     
-    # cp ../${UBOOT_DIR}/u-boot-nodtb.bin ./
-    # cp ../${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb ./
-
-    # ./fiptool create --align 16 \
-	# --soc-fw build/v2l/${BUILDMODE}/bl31.bin \
-    # --nt-fw ../${UBOOT_DIR}/u-boot-nodtb.bin \
-	# --nt-fw ../${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb \
-	# --nt-fw ../rzpi.dtb fip.bin
-	
-    ./fiptool create --align 16 \
-    --soc-fw ${WORKPWD}/${TFA_DIR}/build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
-    --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb \
-    --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot.bin \
-    --fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_code.bin \
-    --hw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_non_secure_vector.bin \
-    --soc-fw-config ${WORKPWD}/cm33/rzv2l_cm33_rpmsg_demo_secure_vector.bin \
-    --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb fip.bin
-   
-    ./fiptool info fip.bin
     # Convert to srec
-    objcopy -O srec --adjust-vma=0x00011E00 --srec-forceS3 -I binary bl2_bp.bin bl2_bp.srec
-    objcopy -I binary -O srec --adjust-vma=0x0000 --srec-forceS3 fip.bin fip.srec
+    objcopy -I binary -O srec --adjust-vma=0x0000 --srec-forceS3 fip.bin fip_${SOC_TYPE}.srec
+    cp fip_${SOC_TYPE}.srec ${WORKPWD}
     cd ${WORKPWD}
+
 }
 
 function main_process(){
@@ -168,10 +143,7 @@ function main_process(){
     cd ${WORKPWD}
     rm *.srec
     get_bootparameter
-    # merge_u_boot_dtb
     mk_bootimage ${SOC_TYPE}
-    cp -f ${WORKPWD}/${TFA_DIR}/bl2_bp.srec ./bl2_bp_${SOC_TYPE}.srec
-    cp -f ${WORKPWD}/${TFA_DIR}/fip.srec ./fip_${SOC_TYPE}.srec
     echo ""
     echo "---Finished--- the boot image as follow:"
     log_info bl2_bp_${SOC_TYPE}.srec
@@ -179,6 +151,8 @@ function main_process(){
 }
 
 #--start--------
+# ./merge_ipl_file.sh v2l
+# ./merge_ipl_file.sh rzpi
 main_process $*
 
 exit

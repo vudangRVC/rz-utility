@@ -12,11 +12,11 @@ export CROSS_COMPILE=aarch64-none-linux-gnu-
 fi
 
 WORKPWD=$(pwd)
-UBOOT_DIR="u-boot"
+UBOOT_DIR="uboot"
 
 UBOOT_GIT_URL="git@github.com:vudangRVC/u-boot-sst.git"
-UBOOT_BRANCH="load-multi-dtb"
-UBOOT_COMMIT="1753022feeff51488ddd4539a586d62ffb4993e3"
+UBOOT_BRANCH="dunfell/rz-sbc"
+UBOOT_COMMIT="7fcc1fdc253400f8b088ea10de30b865a32b957a"
 
 getcode_u-boot()
 {

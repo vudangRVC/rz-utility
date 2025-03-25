@@ -16,19 +16,10 @@ ATF_DIR="trusted-firmware-a"
 
 ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
 ATF_BRANCH_RZPI="load-multi-dtb"
-ATF_COMMIT_RZPI="2f872ba09fd8dec74aabcddfa806cedcba280e19"
+ATF_COMMIT_RZPI=""
 
-ATF_BRANCH_V2L="load-multi-dtb"
-ATF_COMMIT_V2L="2f872ba09fd8dec74aabcddfa806cedcba280e19"
-
-# ATF_BRANCH_V2L="load-multi-dtb"
-# ATF_COMMIT_V2L="848411f689a0f60ec9957f8b794e39f0f47cc812"
-# ATF_COMMIT_V2L="c314a391cf3eaf904e3b7a2875af15cc8254dab5"
-
-# ATF_GIT_URL="https://github.com/renesas-rz/rzg_trusted-firmware-a"
-# ATF_BRANCH_V2L="v2.6/rz"
-# ATF_COMMIT_V2L="aed3786384b99dc13a46a8d3af139df28b5642a3"
-
+ATF_BRANCH_V2L="dunfell/rz-sbc"
+ATF_COMMIT_V2L="c314a391cf3eaf904e3b7a2875af15cc8254dab5"
 
 getcode_atf()
 {   SOC_TYPE=$1
