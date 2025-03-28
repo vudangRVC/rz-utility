@@ -110,11 +110,10 @@ check_extra_tools()
         echo "copy bootparameter "
     fi
 
-    if [ ! -x ${BPTOOL_DIR}/bptool ];then
+    if [ ! -x bptool ];then
         cd ${WORKPWD}/${TFA_DIR}/${BPTOOL_DIR}
         make DEST_OFFSET_ADR=0x08103000 bptool
-        cd ${WORKPWD}/
-        cp -af ${TFA_DIR}/${BPTOOL_DIR}/bptool ${TFA_DIR}/
+        cp bptool ${WORKPWD}//${TFA_DIR}
         echo "copy bptool "
     fi
 }
