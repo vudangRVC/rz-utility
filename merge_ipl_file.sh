@@ -81,47 +81,27 @@ mk_clean()
     rm *.srec
 }
 
-get_bootparameter()
+mk_fiptool()
 {
-    cd ${WORKPWD}/
-    #download extra tool code
-    if [ ! -d ${BOOTPARAMETER_DIR} ];then
-        mkdir ${BOOTPARAMETER_DIR}
-        cd ${BOOTPARAMETER_DIR}
-        wget https://raw.githubusercontent.com/renesas-rz/meta-rzg2/dunfell/rzg2l/recipes-bsp/firmware-pack/bootparameter/bootparameter.c
-    fi
-    cd ${WORKPWD}/
+    cd ${WORKPWD}/${TFA_DIR}/tools/fiptool/
+    make fiptool
+    cp fiptool ${WORKPWD}/${TFA_DIR}
+    echo "copy fiptool "
+
 }
 
-check_extra_tools()
+mk_bptool()
 {
-    cd ${WORKPWD}/${TFA_DIR}/
-    if [ ! -x fiptool ];then
-        make -C tools/fiptool/ fiptool
-        cp -af tools/fiptool/fiptool ./
-        echo "copy fiptool "
-    fi
-
-    if [ ! -x ${BOOTPARAMETER_DIR}/bootparameter ];then
-        cd ${WORKPWD}/${BOOTPARAMETER_DIR}
-        gcc bootparameter.c -o bootparameter
-        cd ${WORKPWD}/
-        cp -af ${BOOTPARAMETER_DIR}/bootparameter ${TFA_DIR}/
-        echo "copy bootparameter "
-    fi
-
-    if [ ! -x bptool ];then
-        cd ${WORKPWD}/${TFA_DIR}/${BPTOOL_DIR}
-        make DEST_OFFSET_ADR=0x08103000 bptool
-        cp bptool ${WORKPWD}//${TFA_DIR}
-        echo "copy bptool "
-    fi
+    cd ${WORKPWD}/${TFA_DIR}/tools/renesas/rz_boot_param
+    make DEST_OFFSET_ADR=0x08103000 bptool
+    cp bptool ${WORKPWD}/${TFA_DIR}
+    echo "copy bptool "
 }
+
 
 mk_bootimage()
 {
     SOC_TYPE=$1
-    check_extra_tools
     cd ${WORKPWD}/${TFA_DIR}
 
     ## BUILDMODE=debug
@@ -198,7 +178,9 @@ function main_process(){
     SOC_TYPE=$1
     cd ${WORKPWD}
     rm *.srec
-    get_bootparameter
+    rm *.bin
+    mk_fiptool
+    mk_bptool
     mk_bootimage ${SOC_TYPE}
     echo ""
     echo "---Finished--- the boot image as follow:"
