@@ -16,7 +16,7 @@ UBOOT_DIR="uboot"
 
 UBOOT_GIT_URL="git@github.com:vudangRVC/u-boot-sst.git"
 UBOOT_BRANCH="rzv2h-multi-dtb"
-UBOOT_COMMIT="195f7ea10163c1c393e7bb8e8a625d0817a00319"
+# UBOOT_COMMIT="195f7ea10163c1c393e7bb8e8a625d0817a00319"
 
 getcode_u-boot()
 {
