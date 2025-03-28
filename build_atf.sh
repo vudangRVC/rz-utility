@@ -25,7 +25,6 @@ ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
 ATF_BRANCH_V2H="rzv2h-multi-dtb"
 ATF_COMMIT_V2H="2b0c18857eebc7a973f611500f6615e991e2625e"
 
-
 getcode_atf()
 {   SOC_TYPE=$1
     cd ${WORKPWD}/
@@ -63,8 +62,8 @@ mk_atf()
         make -j12 PLAT=g2l BOARD=sbc_1 all
     elif [ "${SOC_TYPE}" == "v2h" ] ; then
         echo "build atf for rzv2h"
-        # make -j12 PLAT=v2h BOARD=evk_1 bl2 bl31
-        make -j12 PLAT=v2h BOARD=evk_1 all
+        make -j12 PLAT=v2h BOARD=evk_1 ENABLE_STACK_PROTECTOR=default bl2 bl31
+        # make -j12 PLAT=v2h BOARD=evk_1 all
     else
         echo "build atf for rzsbc"
         make PLAT=v2l BOARD=rzboard bl2 bl31
