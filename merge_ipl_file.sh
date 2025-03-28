@@ -123,22 +123,15 @@ mk_bootimage()
 	cat bp.bin build/${SOC_TYPE}/${BUILDMODE}/bl2.bin > bl2_bp_mmc.bin
     objcopy -I binary -O srec --adjust-vma=0x08101E00 --srec-forceS3 bl2_bp_mmc.bin ${WORKPWD}/bl2_bp_mmc_${SOC_TYPE}.srec
 
-    # Create fip.bin
-	./fiptool create --align 16 --soc-fw ${WORKPWD}/${TFA_DIR}/build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
-		--nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot.bin fip.bin
-    cp fip.bin ${WORKPWD}/fip_${SOC_TYPE}.bin
-    ./fiptool info fip.bin
-    objcopy -I binary -O srec --adjust-vma=0x44000000 --srec-forceS3 fip.bin ${WORKPWD}/fip_${SOC_TYPE}.srec
-    cd ${WORKPWD}
+    # Create fip.bin normal
+	# ./fiptool create --align 16 --soc-fw ${WORKPWD}/${TFA_DIR}/build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
+	# 	--nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot.bin fip.bin
+    # cp fip.bin ${WORKPWD}/fip_${SOC_TYPE}.bin
+    # ./fiptool info fip.bin
+    # objcopy -I binary -O srec --adjust-vma=0x44000000 --srec-forceS3 fip.bin ${WORKPWD}/fip_${SOC_TYPE}.srec
+    # cd ${WORKPWD}
 
-
-    # ./bptool build/${SOC_TYPE}/${BUILDMODE}/bl2.bin bl2_bp.bin
-    # cat build/${SOC_TYPE}/${BUILDMODE}/bl2.bin >> bl2_bp.bin
-    # # Convert to srec
-    # objcopy -O srec --adjust-vma=0x08101E00 --srec-forceS3 -I binary bl2_bp.bin bl2_bp_${SOC_TYPE}.srec
-    # cp bl2_bp_${SOC_TYPE}.srec ${WORKPWD}
-
-    # Create fip.bin
+    # Create fip.bin multi_dtb
     # Address    Binary File Path
     # 0x44000000 trusted-firmware-a/build/g2l/release/bl31.bin
     # 0x44100000 board_info.txt
@@ -147,30 +140,22 @@ mk_bootimage()
     # 0x44400000 uboot/arch/arm/dts/rzpi.dtb
     # 0x44500000 uboot/arch/arm/dts/smarc-rzg2l.dtb
     # 0x48080000 uboot/u-boot-nodtb.bin
-
-    # chmod 777 fiptool
-    # ./fiptool create --align 16 \
-    # --soc-fw ${WORKPWD}/${TFA_DIR}/build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
-    # --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot.bin \
-    # fip.bin
-
-    # chmod 777 fiptool
-    # ./fiptool create --align 16 \
-    # --soc-fw ${WORKPWD}/${TFA_DIR}/build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
-    # --fw-config ${WORKPWD}/board_info.txt \
-    # --hw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzv2h-evk-ver1.dtb \
-    # --soc-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb \
-    # --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2ul.dtb \
-    # --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2l.dtb \
-    # --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot-nodtb.bin \
-    # fip.bin
-   
-    # ./fiptool info fip.bin
-    # # Convert to srec
-    # objcopy -I binary -O srec --adjust-vma=0x44000000 --srec-forceS3 fip.bin fip_${SOC_TYPE}.srec
-    # cp fip_${SOC_TYPE}.srec ${WORKPWD}
-    # cd ${WORKPWD}
-
+    cd ${WORKPWD}
+    cp ${WORKPWD}/${TFA_DIR}/fiptool ${WORKPWD}
+    chmod 777 fiptool
+    ./fiptool create --align 16 \
+    --soc-fw ${WORKPWD}/${TFA_DIR}/build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
+    --fw-config ${WORKPWD}/board_info.txt \
+    --hw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzv2h-evk-ver1.dtb \
+    --soc-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb \
+    --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2ul.dtb \
+    --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2l.dtb \
+    --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot-nodtb.bin \
+    fip.bin
+    ./fiptool info fip.bin
+    cp fip.bin fip_${SOC_TYPE}.bin
+    objcopy -I binary -O srec --adjust-vma=0x44000000 --srec-forceS3 fip.bin fip_${SOC_TYPE}.srec
+    cd ${WORKPWD}
 
 }
 
