@@ -15,3 +15,11 @@ sudo pip3 install pyserial
 
 # burn_IPL
 sudo ./write_ipl.sh
+
+# burn_IPL to eSD card
+lsblk
+
+sudo dd if=bl2_bp_esd_v2h.bin of=/dev/sdb bs=512 seek=1 conv=notrunc
+sudo dd if=fip_v2h.bin of=/dev/sdb bs=512 seek=768 conv=notrunc
+
+sudo eject /dev/sdb
