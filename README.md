@@ -1,11 +1,19 @@
 # rz-utility
 The RZ utilities for development
 
-# download cm33 folder
+# install tool
+sudo apt update
+sudo apt install lzop
+sudo apt install srecord
+sudo apt install libssl3
 
-# Get soure code
-./make_rz_uboot.sh -g
+# Build IPL for v2l
+./build_flash_writer.sh v2l
+./build_atf.sh v2l
+./build_u-boot.sh v2l
 
-# Build IPL for rzpi
-./make_rz_uboot.sh -rzpi
+# merge fip
+./merge_ipl_file.sh v2l
 
+# burn to board
+./write_ipl.sh

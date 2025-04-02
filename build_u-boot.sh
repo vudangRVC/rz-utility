@@ -16,7 +16,7 @@ UBOOT_DIR="uboot"
 
 UBOOT_GIT_URL="git@github.com:vudangRVC/u-boot-sst.git"
 UBOOT_BRANCH="dunfell/rz-sbc"
-UBOOT_COMMIT="7fcc1fdc253400f8b088ea10de30b865a32b957a"
+# UBOOT_COMMIT="7fcc1fdc253400f8b088ea10de30b865a32b957a"
 
 getcode_u-boot()
 {
@@ -25,7 +25,7 @@ getcode_u-boot()
     if [ ! -d {UBOOT_DIR} ];then
         git clone $UBOOT_GIT_URL ${UBOOT_DIR} --jobs 16
         git -C ${UBOOT_DIR} checkout ${UBOOT_BRANCH}
-        git -C ${UBOOT_DIR} checkout ${UBOOT_COMMIT}
+        # git -C ${UBOOT_DIR} checkout ${UBOOT_COMMIT}
     fi
 }
 
