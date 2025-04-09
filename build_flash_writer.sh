@@ -26,14 +26,16 @@ getcode_flash-writer()
     # download flash-writer
     if [ ! -d {FWT_DIR} ];then
         git clone $FWT_GIT_URL ${FWT_DIR} --jobs 16
-        git -C ${FWT_DIR} checkout ${FWT_BRANCH}
     fi
 
     cd ${WORKPWD}/${FWT_DIR}
     if [ "${SOC_TYPE}" == "v2l" ] ; then
         git checkout ${FWT_COMMIT_V2L}
-    else
+    elif [ "${SOC_TYPE}" == "rzpi" ] ; then
         git checkout ${FWT_COMMIT_RZPI}
+    else
+        echo "Error: Invalid SOC_TYPE. Please use 'v2l' or 'rzpi'."
+        exit 1
     fi
 }
 
@@ -48,9 +50,14 @@ mk_flash-writer()
         make clean
         make BOARD=RZV2L_SMARC_PMIC    -j12
         cp AArch64_output/Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot ${WORKPWD}
-    else
+    elif [ "${SOC_TYPE}" == "rzpi" ] ; then
+        git checkout ${FWT_COMMIT_RZPI}
         make clean
-        make BOARD=RZG2L_SMARC_PMIC    -j12
+        make BOARD=RZG2L_SBC    -j12
+        cp AArch64_output/Flash_Writer_SCIF_RZG2L_SBC_DDR4_1GB.mot ${WORKPWD}/Flash_Writer_SCIF_rzpi.mot
+    else
+        echo "Error: Invalid SOC_TYPE. Please use 'v2l' or 'rzpi'."
+        exit 1
     fi
     [ $? -ne 0 ] && log_error "Failed in ${FWT_DIR} ..." && exit
 }

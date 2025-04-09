@@ -69,6 +69,7 @@ log_error(){
     local string=$1
     echo -ne "\e[31m $string \e[0m\n"
 }
+
 log_info(){
     local string=$1
     echo -ne "\e[32m $string \e[0m\n"
@@ -119,9 +120,17 @@ mk_bootimage()
     ## BUILDMODE=debug
     BUILDMODE=release
 
+    if [ "${SOC_TYPE}" == "v2l" ] ; then
+        BOARD="v2l"
+    elif [ "${SOC_TYPE}" == "rzpi" ] ; then
+        BOARD="g2l"
+    else
+        BOARD="v2l"
+    fi
+
     # Create bl2_bp.bin
-    ./bootparameter build/${SOC_TYPE}/${BUILDMODE}/bl2.bin bl2_bp.bin
-    cat build/${SOC_TYPE}/${BUILDMODE}/bl2.bin >> bl2_bp.bin
+    ./bootparameter build/${BOARD}/${BUILDMODE}/bl2.bin bl2_bp.bin
+    cat build/${BOARD}/${BUILDMODE}/bl2.bin >> bl2_bp.bin
     # Convert to srec
     objcopy -O srec --adjust-vma=0x00011E00 --srec-forceS3 -I binary bl2_bp.bin bl2_bp_${SOC_TYPE}.srec
     cp bl2_bp_${SOC_TYPE}.srec ${WORKPWD}
@@ -138,7 +147,7 @@ mk_bootimage()
 
     chmod 777 fiptool
     ./fiptool create --align 16 \
-    --soc-fw ${WORKPWD}/${TFA_DIR}/build/${SOC_TYPE}/${BUILDMODE}/bl31.bin \
+    --soc-fw ${WORKPWD}/${TFA_DIR}/build/${BOARD}/${BUILDMODE}/bl31.bin \
     --fw-config ${WORKPWD}/board_info.txt \
     --hw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2lc.dtb \
     --soc-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb \
@@ -152,8 +161,6 @@ mk_bootimage()
     objcopy -I binary -O srec --adjust-vma=0x0000 --srec-forceS3 fip.bin fip_${SOC_TYPE}.srec
     cp fip_${SOC_TYPE}.srec ${WORKPWD}
     cd ${WORKPWD}
-
-
 }
 
 function main_process(){

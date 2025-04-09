@@ -1,4 +1,4 @@
-33
+44
 #define BOARD_ID_RZV2H   				22
 #define BOARD_ID_RZV2L 					33
 #define BOARD_ID_RZPI  					44
