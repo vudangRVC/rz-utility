@@ -144,7 +144,7 @@ mk_bootimage()
     --soc-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb \
     --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2ul.dtb \
     --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2l.dtb \
-    --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot-nodtb.bin \
+    --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot.bin \
     fip.bin
    
     ./fiptool info fip.bin

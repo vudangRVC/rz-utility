@@ -15,8 +15,8 @@ WORKPWD=$(pwd)
 UBOOT_DIR="uboot"
 
 UBOOT_GIT_URL="git@github.com:vudangRVC/u-boot-sst.git"
-UBOOT_BRANCH="rzv2l-multi-dtb"
-UBOOT_COMMIT="36bfaf82279ecd87ed918550b5de505091768bb7"
+UBOOT_BRANCH="rzv2l-fit"
+# UBOOT_COMMIT="36bfaf82279ecd87ed918550b5de505091768bb7"
 
 getcode_u-boot()
 {
@@ -25,7 +25,7 @@ getcode_u-boot()
     if [ ! -d {UBOOT_DIR} ];then
         git clone $UBOOT_GIT_URL ${UBOOT_DIR} --jobs 16
         git -C ${UBOOT_DIR} checkout ${UBOOT_BRANCH}
-        git -C ${UBOOT_DIR} checkout ${UBOOT_COMMIT}
+        # git -C ${UBOOT_DIR} checkout ${UBOOT_COMMIT}
     fi
 }
 
