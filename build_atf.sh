@@ -34,10 +34,10 @@ getcode_atf()
     cd ${WORKPWD}/${ATF_DIR}
     if [ "${SOC_TYPE}" == "v2l" ] ; then
         git checkout ${ATF_BRANCH_V2L}
-        git checkout ${ATF_COMMIT_V2L}
+        #git checkout ${ATF_COMMIT_V2L}
     else
         git checkout ${ATF_BRANCH_RZPI}
-        git checkout ${ATF_COMMIT_RZPI}
+        #git checkout ${ATF_COMMIT_RZPI}
     fi
 }
 

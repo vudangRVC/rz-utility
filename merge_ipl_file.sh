@@ -151,7 +151,7 @@ mk_bootimage()
     --fw-config ${WORKPWD}/board_info.txt \
     --hw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2lc.dtb \
     --soc-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb \
-    --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2ul.dtb \
+    --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzpi.dtb \
     --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2l.dtb \
     --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot.bin \
     fip.bin
