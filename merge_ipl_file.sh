@@ -95,18 +95,18 @@ get_bootparameter()
 
 check_extra_tools()
 {
-    cd ${WORKPWD}/${TFA_DIR}/
+    cd ${WORKPWD}
     if [ ! -x fiptool ];then
-        make -C tools/fiptool/ fiptool
-        cp -af tools/fiptool/fiptool ./
+        make -C ${WORKPWD}/${TFA_DIR}/tools/fiptool/ fiptool
+        cp -af ${WORKPWD}/${TFA_DIR}/tools/fiptool/fiptool ${WORKPWD}
         echo "copy fiptool "
     fi
 
-    if [ ! -x ${BOOTPARAMETER_DIR}/bootparameter ];then
+    if [ ! -x bootparameter ];then
         cd ${WORKPWD}/${BOOTPARAMETER_DIR}
         gcc bootparameter.c -o bootparameter
+        cp bootparameter ${WORKPWD}
         cd ${WORKPWD}/
-        cp -af ${BOOTPARAMETER_DIR}/bootparameter ${TFA_DIR}/
         echo "copy bootparameter "
     fi
 }
@@ -115,7 +115,7 @@ mk_bootimage()
 {
     SOC_TYPE=$1
     check_extra_tools
-    cd ${WORKPWD}/${TFA_DIR}
+    cd ${WORKPWD}
 
     ## BUILDMODE=debug
     BUILDMODE=release
@@ -129,11 +129,10 @@ mk_bootimage()
     fi
 
     # Create bl2_bp.bin
-    ./bootparameter build/${BOARD}/${BUILDMODE}/bl2.bin bl2_bp.bin
-    cat build/${BOARD}/${BUILDMODE}/bl2.bin >> bl2_bp.bin
+    ./bootparameter ${WORKPWD}/${TFA_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin bl2_bp.bin
+    cat ${WORKPWD}/${TFA_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin >> bl2_bp.bin
     # Convert to srec
     objcopy -O srec --adjust-vma=0x00011E00 --srec-forceS3 -I binary bl2_bp.bin bl2_bp_${SOC_TYPE}.srec
-    cp bl2_bp_${SOC_TYPE}.srec ${WORKPWD}
 
     # Create fip.bin
     # Address    Binary File Path
@@ -143,7 +142,7 @@ mk_bootimage()
     # 0x44300000 uboot/arch/arm/dts/smarc-rzv2l.dtb
     # 0x44400000 uboot/arch/arm/dts/rzpi.dtb
     # 0x44500000 uboot/arch/arm/dts/smarc-rzg2l.dtb
-    # 0x48080000 uboot/u-boot-nodtb.bin
+    # 0x48080000 uboot/u-boot.bin
 
     chmod 777 fiptool
     ./fiptool create --align 16 \
@@ -151,7 +150,7 @@ mk_bootimage()
     --fw-config ${WORKPWD}/board_info.txt \
     --hw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2lc.dtb \
     --soc-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzv2l.dtb \
-    --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2ul.dtb \
+    --rmm-fw ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/rzpi.dtb \
     --nt-fw-config ${WORKPWD}/${UBOOT_DIR}/arch/arm/dts/smarc-rzg2l.dtb \
     --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot.bin \
     fip.bin
@@ -159,7 +158,6 @@ mk_bootimage()
     ./fiptool info fip.bin
     # Convert to srec
     objcopy -I binary -O srec --adjust-vma=0x0000 --srec-forceS3 fip.bin fip_${SOC_TYPE}.srec
-    cp fip_${SOC_TYPE}.srec ${WORKPWD}
     cd ${WORKPWD}
 }
 
