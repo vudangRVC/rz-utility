@@ -39,7 +39,7 @@ mk_u-boot()
     if [ "${SOC_TYPE}" == "v2l" ] ; then
         make smarc-rzv2l_defconfig
     elif [ "${SOC_TYPE}" == "rzpi" ] ; then
-        make rzpi_defconfig
+        make smarc-rzv2l_defconfig
     else
         make common_defconfig
     fi
