@@ -34,9 +34,9 @@ class FlashUtil:
 		self.__parser.add_argument('--serial_port_baud', default=115200, dest='baudRate', action='store', type=int, help='Baud rate for serial port (defaults to: 115200).')
 
 		# Images
-		self.__parser.add_argument('--image_writer', default=f'{self.__imagesDir}/Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot', dest='flashWriterImage', action='store', type=str, help="Path to Flash Writer image (defaults to: <path/to/your/package>/target/images/Flash_Writer_SCIF_rzpi.mot).")
-		self.__parser.add_argument('--image_bl2', default=f'{self.__imagesDir}/bl2_bp_v2l.srec', dest='bl2Image', action='store', type=str, help='Path to bl2 image (defaults to: <path/to/your/package>/target/images/bl2_bp-rzpi.srec).')
-		self.__parser.add_argument('--image_fip', default=f'{self.__imagesDir}/fip_v2l.srec', dest='fipImage', action='store', type=str, help='Path to FIP image (defaults to: <path/to/your/package>/target/images/fip-rzpi.srec).')
+		self.__parser.add_argument('--image_writer', default=f'{self.__imagesDir}/Flash_Writer_SCIF_rzpi.mot', dest='flashWriterImage', action='store', type=str, help="Path to Flash Writer image (defaults to: Flash_Writer_SCIF_rzpi.mot).")
+		self.__parser.add_argument('--image_bl2', default=f'{self.__imagesDir}/bl2_bp_rzpi.srec', dest='bl2Image', action='store', type=str, help='Path to bl2 image (defaults to: bl2_bp_rzpi.srec).')
+		self.__parser.add_argument('--image_fip', default=f'{self.__imagesDir}/fip_rzpi.srec', dest='fipImage', action='store', type=str, help='Path to FIP image (defaults to: fip_rzpi.srec).')
 
 		self.__args = self.__parser.parse_args()
 
