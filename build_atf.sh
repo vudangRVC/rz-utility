@@ -18,8 +18,8 @@ ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
 ATF_BRANCH_RZPI="atf-pass-params"
 # ATF_COMMIT_RZPI="cd24ca5d4b7e7c66157b6da7b60973285f58d3b0"
 
-ATF_BRANCH_V2L="rzv2l-multi-dtb"
-ATF_COMMIT_V2L="6142c6afd8b6e4bdaa9d34ad7f9b099eeb8d05b6"
+ATF_BRANCH_V2L="atf-pass-params-v2l"
+# ATF_COMMIT_V2L="6142c6afd8b6e4bdaa9d34ad7f9b099eeb8d05b6"
 
 getcode_atf()
 {   SOC_TYPE=$1
