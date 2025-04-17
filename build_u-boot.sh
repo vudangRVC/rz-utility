@@ -2,7 +2,7 @@
 
 ARM_GCC_VERSION="SDK"
 if [ "${ARM_GCC_VERSION}" == "SDK" ] ; then
-source /opt/poky/3.1.31/environment-setup-aarch64-poky-linux
+source /opt/poky/3.1.14/environment-setup-aarch64-poky-linux
 else
 ## gcc 10.3 default
 TOOLCHAIN_PATH=$HOME/toolchain/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin
