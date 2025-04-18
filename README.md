@@ -20,3 +20,9 @@ sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 
 # Burn IPL for rzv2l
 ./write_ipl.sh --serial_port /dev/ttyUSB1 --image_writer Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot --image_bl2 bl2_bp_v2l.srec --image_fip fip_v2l.srec
+
+# Build binaries for rzg2l
+./all_build.sh g2l 
+
+# Burn IPL for rzv2l
+./write_ipl.sh --serial_port /dev/ttyUSB1 --image_writer Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot --image_bl2 bl2_bp_g2l.srec --image_fip fip_g2l.srec
