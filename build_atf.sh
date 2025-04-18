@@ -1,25 +1,15 @@
 #!/bin/bash
-
-ARM_GCC_VERSION="SDK"
-if [ "${ARM_GCC_VERSION}" == "SDK" ] ; then
-source /opt/poky/3.1.14/environment-setup-aarch64-poky-linux
-else
-## gcc 10.3 default
-TOOLCHAIN_PATH=$HOME/toolchain/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin
-export PATH=$TOOLCHAIN_PATH:$PATH
-export ARCH=arm64
-export CROSS_COMPILE=aarch64-none-linux-gnu-
-fi
-
-WORKPWD=$(pwd)
-ATF_DIR="trusted-firmware-a"
+source ./common.sh
 
 ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
 ATF_BRANCH_RZPI="atf-pass-params"
-# ATF_COMMIT_RZPI="cd24ca5d4b7e7c66157b6da7b60973285f58d3b0"
+ATF_COMMIT_RZPI="032b45511cb339615c8450e9ab43338f57949fe3"
 
 ATF_BRANCH_V2L="atf-pass-params-v2l"
-# ATF_COMMIT_V2L="6142c6afd8b6e4bdaa9d34ad7f9b099eeb8d05b6"
+ATF_COMMIT_V2L="2f839d57673d02b400e64579e59221c14cae260c"
+
+ATF_BRANCH_G2L="atf-pass-params-g2l"
+ATF_COMMIT_G2L="dd04e587c6a7db554953eaf0bf249335b169a116"
 
 getcode_atf()
 {   SOC_TYPE=$1
@@ -33,10 +23,10 @@ getcode_atf()
     cd ${WORKPWD}/${ATF_DIR}
     if [ "${SOC_TYPE}" == "v2l" ] ; then
         git checkout ${ATF_BRANCH_V2L}
-        # git checkout ${ATF_COMMIT_V2L}
-    else
+    elif [ "${SOC_TYPE}" == "rzpi" ] ; then
         git checkout ${ATF_BRANCH_RZPI}
-        # git checkout ${ATF_COMMIT_RZPI}
+    else
+        git checkout ${ATF_BRANCH_G2L}
     fi
 }
 
@@ -53,22 +43,28 @@ mk_atf()
     elif [ "${SOC_TYPE}" == "rzpi" ] ; then
         echo "build atf for rzpi"
         make -j12 PLAT=g2l BOARD=sbc_1 all
+    elif [ "${SOC_TYPE}" == "g2l" ] ; then
+        echo "build atf for g2l"
+        make PLAT=g2l BOARD=smarc_pmic_2 bl2 bl31
     else
-        echo "build atf for rzsbc"
-        make PLAT=v2l BOARD=rzboard bl2 bl31
+        echo "Please input the right soc type"
+        exit
     fi
     [ $? -ne 0 ] && log_error "Failed in ${ATF_DIR} ..." && exit
 }
 
 function main_process(){
     SOC_TYPE=$1
+    validate_soc_type "${SOC_TYPE}"
     getcode_atf $SOC_TYPE
     mk_atf $SOC_TYPE
 }
 
 #--start--------
+# ./build_atf.sh v2h
 # ./build_atf.sh v2l
 # ./build_atf.sh rzpi
+# ./build_atf.sh g2l
 main_process $*
 
 exit

@@ -1,22 +1,11 @@
 #!/bin/bash
 
-ARM_GCC_VERSION="SDK"
-if [ "${ARM_GCC_VERSION}" == "SDK" ] ; then
-source /opt/poky/3.1.14/environment-setup-aarch64-poky-linux
-else
-## gcc 10.3 default
-TOOLCHAIN_PATH=$HOME/toolchain/gcc-arm-10.3-2021.07-x86_64-aarch64-none-linux-gnu/bin
-export PATH=$TOOLCHAIN_PATH:$PATH
-export ARCH=arm64
-export CROSS_COMPILE=aarch64-none-linux-gnu-
-fi
-
-WORKPWD=$(pwd)
+source ./common.sh
 
 FWT_GIT_URL="git@github.com:vudangRVC/flash-writer-sst.git"
 FWT_BRANCH="dunfell/rz-sbc"
-FWT_DIR="flash_writer"
 FWT_COMMIT_V2L="ff167b676547f3997906c82c9be504eb5cff8ef0"
+FWT_COMMIT_G2L="ff167b676547f3997906c82c9be504eb5cff8ef0"
 FWT_COMMIT_RZPI="8e5919a314673217d93dbb34227b8c22d71d681b"
 
 getcode_flash-writer()
@@ -33,9 +22,11 @@ getcode_flash-writer()
         git checkout ${FWT_COMMIT_V2L}
     elif [ "${SOC_TYPE}" == "rzpi" ] ; then
         git checkout ${FWT_COMMIT_RZPI}
+    elif [ "${SOC_TYPE}" == "g2l" ] ; then
+        git checkout ${FWT_COMMIT_G2L}
     else
-        echo "Error: Invalid SOC_TYPE. Please use 'v2l' or 'rzpi'."
-        exit 1
+        echo "Please input the right soc type"
+        exit
     fi
 }
 
@@ -45,18 +36,21 @@ mk_flash-writer()
     cd ${WORKPWD}
     rm *.mot
     cd ${WORKPWD}/${FWT_DIR}/
+    make clean
     if [ "${SOC_TYPE}" == "v2l" ] ; then
         git checkout ${FWT_COMMIT_V2L}
-        make clean
         make BOARD=RZV2L_SMARC_PMIC    -j12
         cp AArch64_output/Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot ${WORKPWD}
     elif [ "${SOC_TYPE}" == "rzpi" ] ; then
         git checkout ${FWT_COMMIT_RZPI}
-        make clean
         make BOARD=RZG2L_SBC    -j12
         cp AArch64_output/Flash_Writer_SCIF_RZG2L_SBC_DDR4_1GB.mot ${WORKPWD}/Flash_Writer_SCIF_rzpi.mot
+    elif [ "${SOC_TYPE}" == "g2l" ] ; then
+        git checkout ${FWT_COMMIT_G2L}
+        make BOARD=RZG2L_SMARC_PMIC    -j12
+        cp AArch64_output/Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot ${WORKPWD}
     else
-        echo "Error: Invalid SOC_TYPE. Please use 'v2l' or 'rzpi'."
+        echo "Error: Invalid SOC_TYPE."
         exit 1
     fi
     [ $? -ne 0 ] && log_error "Failed in ${FWT_DIR} ..." && exit
@@ -64,12 +58,15 @@ mk_flash-writer()
 
 function main_process(){
     SOC_TYPE=$1
+    validate_soc_type "${SOC_TYPE}"
     getcode_flash-writer $SOC_TYPE
     mk_flash-writer  $SOC_TYPE
 }
 
 # call function
+# ./build_flash_writer.sh v2h
 # ./build_flash_writer.sh v2l
 # ./build_flash_writer.sh rzpi
+# ./build_flash_writer.sh g2l
 main_process $1
 
