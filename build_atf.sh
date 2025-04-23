@@ -22,9 +22,9 @@ ATF_DIR="trusted-firmware-a"
 # ATF_COMMIT_V2L="6142c6afd8b6e4bdaa9d34ad7f9b099eeb8d05b6"
 
 ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
-ATF_BRANCH_V2H="dev-rzv2h"
+ATF_BRANCH_V2H="atf-pass-params-v2h"
 # ATF_COMMIT_V2H="2b0c18857eebc7a973f611500f6615e991e2625e"
-ATF_COMMIT_V2H="54ba8861df27801edb2d041647fb0df0c9c16c14"
+# ATF_COMMIT_V2H="54ba8861df27801edb2d041647fb0df0c9c16c14"
 
 getcode_atf()
 {   SOC_TYPE=$1
