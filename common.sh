@@ -20,7 +20,7 @@ BOOTPARAMETER_DIR="bootparameter_dir"
 validate_soc_type() {
     SOC_TYPE=$1
     case "${SOC_TYPE}" in
-        v2h|v2l|rzpi|g2l)
+        v2h|v2l|rzpi|g2l|g2l100)
             return 0
             ;;
         *)
@@ -30,6 +30,7 @@ validate_soc_type() {
             echo "example: ./all_build.sh rzpi"
             echo "example: ./all_build.sh v2l"
             echo "example: ./all_build.sh g2l"
+            echo "example: ./all_build.sh g2l100"
             exit 1
             ;;
     esac

@@ -24,6 +24,8 @@ getcode_flash-writer()
         git checkout ${FWT_COMMIT_RZPI}
     elif [ "${SOC_TYPE}" == "g2l" ] ; then
         git checkout ${FWT_COMMIT_G2L}
+    elif [ "${SOC_TYPE}" == "g2l100" ] ; then
+        git checkout ${FWT_BRANCH}
     else
         echo "Please input the right soc type"
         exit
@@ -49,6 +51,10 @@ mk_flash-writer()
         git checkout ${FWT_COMMIT_G2L}
         make BOARD=RZG2L_SMARC_PMIC    -j12
         cp AArch64_output/Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot ${WORKPWD}
+    elif [ "${SOC_TYPE}" == "g2l100" ] ; then
+        git checkout ${FWT_COMMIT_G2L}
+        make BOARD=RZG2L_15MMSQ_DEV    -j12
+        cp AArch64_output/Flash_Writer_SCIF_RZG2L_15MMSQ_DEV_DDR4_4GB.mot ${WORKPWD}
     else
         echo "Error: Invalid SOC_TYPE."
         exit 1
