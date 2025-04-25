@@ -3,8 +3,7 @@
 source ./common.sh
 
 UBOOT_GIT_URL="git@github.com:vudangRVC/u-boot-sst.git"
-UBOOT_BRANCH="atf-pass-params"
-UBOOT_COMMIT="7c3f1a18d23971545eb77311157eef9b91f14d11"
+UBOOT_BRANCH="rz-support-multi-boards"
 
 getcode_u-boot()
 {
@@ -24,16 +23,7 @@ mk_u-boot()
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
     make clean
     make distclean
-    if [ "${SOC_TYPE}" == "v2l" ] ; then
-        make smarc-rzv2l_defconfig
-    elif [ "${SOC_TYPE}" == "rzpi" ] ; then
-        make smarc-rzv2l_defconfig
-    elif [ "${SOC_TYPE}" == "g2l" ] ; then
-        make smarc-rzv2l_defconfig
-    else
-        echo "SOC_TYPE is not supported"
-        exit
-    fi
+    make rz-multi-board_defconfig
     make -j12
     [ $? -ne 0 ] && log_error "Failed in ${UBOOT_DIR} ..." && exit
 }
@@ -50,6 +40,7 @@ function main_process(){
 # ./build_u-boot.sh v2l
 # ./build_u-boot.sh rzpi
 # ./build_u-boot.sh g2l
+# ./build_u-boot.sh g2l100
 main_process $*
 
 exit
