@@ -1,9 +1,10 @@
 #!/bin/bash
-
 source ./common.sh
 
 FWT_GIT_URL="git@github.com:vudangRVC/flash-writer-sst.git"
 FWT_BRANCH="dunfell/rz-sbc"
+FWT_BRANCH_G2L100="rs-g2l-100"
+
 FWT_COMMIT_V2L="ff167b676547f3997906c82c9be504eb5cff8ef0"
 FWT_COMMIT_G2L="ff167b676547f3997906c82c9be504eb5cff8ef0"
 FWT_COMMIT_RZPI="8e5919a314673217d93dbb34227b8c22d71d681b"
@@ -25,7 +26,7 @@ getcode_flash-writer()
     elif [ "${SOC_TYPE}" == "g2l" ] ; then
         git checkout ${FWT_COMMIT_G2L}
     elif [ "${SOC_TYPE}" == "g2l100" ] ; then
-        git checkout ${FWT_BRANCH}
+        git checkout ${FWT_BRANCH_G2L100}
     else
         echo "Please input the right soc type"
         exit
@@ -52,7 +53,7 @@ mk_flash-writer()
         make BOARD=RZG2L_SMARC_PMIC    -j12
         cp AArch64_output/Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot ${WORKPWD}
     elif [ "${SOC_TYPE}" == "g2l100" ] ; then
-        git checkout ${FWT_COMMIT_G2L}
+        git checkout ${FWT_BRANCH_G2L100}
         make BOARD=RZG2L_15MMSQ_DEV    -j12
         cp AArch64_output/Flash_Writer_SCIF_RZG2L_15MMSQ_DEV_DDR4_4GB.mot ${WORKPWD}
     else
@@ -74,5 +75,6 @@ function main_process(){
 # ./build_flash_writer.sh v2l
 # ./build_flash_writer.sh rzpi
 # ./build_flash_writer.sh g2l
+# ./build_flash_writer.sh g2l100
 main_process $1
 
