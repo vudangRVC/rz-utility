@@ -16,6 +16,7 @@ function main_process(){
 # ./all_build.sh v2l
 # ./all_build.sh rzpi
 # ./all_build.sh g2l
+# ./all_build.sh g2l100
 main_process $*
 
 exit

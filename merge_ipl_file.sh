@@ -51,6 +51,8 @@ mk_bootimage()
         BOARD="g2l"
     elif [ "${SOC_TYPE}" == "g2l" ] ; then
         BOARD="g2l"
+    elif [ "${SOC_TYPE}" == "g2l100" ] ; then
+        BOARD="g2l"
     else
         exit
     fi
@@ -93,13 +95,14 @@ mk_bootimage()
 # Map board name to BOARD_ID
 set_board_id() {
     case "$1" in
-        v2h)   echo 22 ;BOARD_ID="22";;
-        v2l)   echo 33 ;BOARD_ID="33";;
-        rzpi)  echo 44 ;BOARD_ID="44";;
-        g2l)   echo 55 ;BOARD_ID="55";;
-        g2lc)  echo 66 ;BOARD_ID="66";;
-        g2ul)  echo 77 ;BOARD_ID="77";;
-        *)     echo "Unknown board: $1"; exit 1 ;;
+        v2h)     echo 22 ;BOARD_ID="22";;
+        v2l)     echo 33 ;BOARD_ID="33";;
+        rzpi)    echo 44 ;BOARD_ID="44";;
+        g2l)     echo 55 ;BOARD_ID="55";;
+        g2lc)    echo 66 ;BOARD_ID="66";;
+        g2ul)    echo 77 ;BOARD_ID="77";;
+        g2l100)  echo 88 ;BOARD_ID="88";;
+        *)       echo "Unknown board: $1"; exit 1 ;;
     esac
 
     BOARD_INFO_FILE="board_info.txt"
@@ -113,6 +116,7 @@ set_board_id() {
             printf "#define BOARD_ID_RZG2L\t\t\t\t55\n"
             printf "#define BOARD_ID_RZG2LC\t\t\t\t66\n"
             printf "#define BOARD_ID_RZG2UL\t\t\t\t77\n"
+            printf "#define BOARD_ID_RZG2L100\t\t\t\t88\n"
         } > "${BOARD_INFO_FILE}"
     fi
 
@@ -138,6 +142,7 @@ function main_process(){
 # ./merge_ipl_file.sh v2l
 # ./merge_ipl_file.sh rzpi
 # ./merge_ipl_file.sh g2l
+# ./merge_ipl_file.sh g2l100
 main_process $*
 
 exit

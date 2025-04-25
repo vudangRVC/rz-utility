@@ -23,7 +23,7 @@ mk_u-boot()
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
     make clean
     make distclean
-    make rz-multi-board_defconfig
+    make rz-multi-boards_defconfig
     make -j12
     [ $? -ne 0 ] && log_error "Failed in ${UBOOT_DIR} ..." && exit
 }
