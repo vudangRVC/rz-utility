@@ -11,8 +11,12 @@ ATF_COMMIT_V2L="2f839d57673d02b400e64579e59221c14cae260c"
 ATF_BRANCH_G2L="atf-pass-params-g2l"
 ATF_COMMIT_G2L="dd04e587c6a7db554953eaf0bf249335b169a116"
 
+ATF_BRANCH_G2L100="atf-pass-params-g2l"
+ATF_COMMIT_G2L="dd04e587c6a7db554953eaf0bf249335b169a116"
+
 getcode_atf()
-{   SOC_TYPE=$1
+{
+    SOC_TYPE=$1
     cd ${WORKPWD}/
 
     # download atf
@@ -25,8 +29,13 @@ getcode_atf()
         git checkout ${ATF_BRANCH_V2L}
     elif [ "${SOC_TYPE}" == "rzpi" ] ; then
         git checkout ${ATF_BRANCH_RZPI}
-    else
+    elif [ "${SOC_TYPE}" == "g2l" ] ; then
         git checkout ${ATF_BRANCH_G2L}
+    elif [ "${SOC_TYPE}" == "g2l100" ] ; then
+        git checkout ${ATF_BRANCH_G2L100}
+    else
+        echo "Please input the right soc type"
+        exit
     fi
 }
 
@@ -45,6 +54,9 @@ mk_atf()
         make -j12 PLAT=g2l BOARD=sbc_1 all
     elif [ "${SOC_TYPE}" == "g2l" ] ; then
         echo "build atf for g2l"
+        make PLAT=g2l BOARD=smarc_pmic_2 bl2 bl31
+    elif [ "${SOC_TYPE}" == "g2l100" ] ; then
+        echo "build atf for g2l100"
         make PLAT=g2l BOARD=smarc_pmic_2 bl2 bl31
     else
         echo "Please input the right soc type"
@@ -65,6 +77,7 @@ function main_process(){
 # ./build_atf.sh v2l
 # ./build_atf.sh rzpi
 # ./build_atf.sh g2l
+# ./build_atf.sh g2l100
 main_process $*
 
 exit
