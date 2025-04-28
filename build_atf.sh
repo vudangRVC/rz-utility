@@ -3,16 +3,12 @@ source ./common.sh
 
 ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
 ATF_BRANCH_RZPI="atf-pass-params"
-ATF_COMMIT_RZPI="032b45511cb339615c8450e9ab43338f57949fe3"
 
 ATF_BRANCH_V2L="atf-pass-params-v2l"
-ATF_COMMIT_V2L="2f839d57673d02b400e64579e59221c14cae260c"
 
 ATF_BRANCH_G2L="atf-pass-params-g2l"
-ATF_COMMIT_G2L="dd04e587c6a7db554953eaf0bf249335b169a116"
 
 ATF_BRANCH_G2L100="atf-pass-params-g2l"
-ATF_COMMIT_G2L="dd04e587c6a7db554953eaf0bf249335b169a116"
 
 getcode_atf()
 {
