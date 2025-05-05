@@ -29,7 +29,7 @@ mk_flash-writer()
         cp AArch64_output/Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot ${WORKPWD}
     elif [ "${SOC_TYPE}" == "rzpi" ] ; then
         make BOARD=RZG2L_SBC    -j12
-        cp AArch64_output/Flash_Writer_SCIF_RZG2L_SBC_DDR4_1GB.mot ${WORKPWD}/Flash_Writer_SCIF_rzpi.mot
+        cp AArch64_output/Flash_Writer_SCIF_RZG2L_SBC_DDR4_900MB_1PCS.mot ${WORKPWD}/Flash_Writer_SCIF_rzpi.mot
     elif [ "${SOC_TYPE}" == "g2l" ] ; then
         make BOARD=RZG2L_SMARC_PMIC    -j12
         cp AArch64_output/Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot ${WORKPWD}
