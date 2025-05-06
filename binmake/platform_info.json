@@ -1,0 +1,28 @@
+{
+    "model_id": 16,
+    "revision_minor": 1,
+    "revision_major": 20,
+    "model_string": "RZ/G2L-SBC",
+    "mfg_name": "Renesas",
+
+    "bl2_loc": 0,
+    "bl2_dtb_loc": 0,
+    "u_boot_loc": 3,
+    "u_boot_dtb_loc": 3,
+    "kernel_loc": 1,
+    "kernel_dtb_loc": 1,
+
+    "bl2_id": 10,
+    "bl2_dtb_id": 11,
+    "u_boot_id": 20,
+    "u_boot_dtb_id": 21,
+    "kernel_id": 30,
+    "kernel_dtb_id": 31,
+
+    "bl2_desc": "BL2 v2.9 located in SPI flash",
+    "bl2_dtb_desc": "Booting using the fdt blob at 0x0002C000",
+    "u_boot_desc": "U-Boot 2021.10 built with Buildroot",
+    "u_boot_dtb_desc": "U-Boot DTB for RZ/G2L board",
+    "kernel_desc": "Linux Kernel 5.10.184-cip36-yocto-standard",
+    "kernel_dtb_desc": "Booting using the fdt blob at 0x48000000"
+}
