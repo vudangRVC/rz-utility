@@ -60,15 +60,14 @@ mk_bootimage()
         ./build_u-boot.sh ${BOARD}
     fi
 
-    ./bootparameter ${WORKPWD}/${ATF_DIR}/build/${SOC}/${BUILDMODE}/bl2_with_dtb-smarc.bin bl2_bp.bin
-    cat ${WORKPWD}/${ATF_DIR}/build/${SOC}/${BUILDMODE}/bl2_with_dtb-smarc.bin >> bl2_bp.bin
+    ./bootparameter ${WORKPWD}/${ATF_DIR}/build/${SOC}/${BUILDMODE}/bl2.bin bl2_bp.bin
+    cat ${WORKPWD}/${ATF_DIR}/build/${SOC}/${BUILDMODE}/bl2.bin >> bl2_bp.bin
 
     objcopy -O srec --adjust-vma=0x00011E00 --srec-forceS3 -I binary bl2_bp.bin bl2_bp_${BOARD}.srec
 
     chmod 777 fiptool
     ./fiptool create --align 16 \
     --soc-fw ${WORKPWD}/${ATF_DIR}/build/${SOC}/${BUILDMODE}/bl31.bin \
-    --fw-config ${WORKPWD}/board_info.txt \
     --nt-fw ${WORKPWD}/${UBOOT_DIR}/u-boot.bin \
     fip.bin
     ./fiptool info fip.bin
@@ -76,42 +75,10 @@ mk_bootimage()
     objcopy -I binary -O srec --adjust-vma=0x0000 --srec-forceS3 fip.bin fip_${BOARD}.srec
 }
 
-set_board_id() {
-    BOARD=$1
-    case "${BOARD}" in
-        v2h)     BOARD_ID="22" ;;
-        v2l)     BOARD_ID="33" ;;
-        rzpi)    BOARD_ID="44" ;;
-        g2l)     BOARD_ID="55" ;;
-        g2lc)    BOARD_ID="66" ;;
-        g2ul)    BOARD_ID="77" ;;
-        g2l100)  BOARD_ID="88" ;;
-        *)       echo "Unknown board: $BOARD"; exit 1 ;;
-    esac
-
-    BOARD_INFO_FILE="board_info.txt"
-
-    if [ ! -f "${BOARD_INFO_FILE}" ]; then
-        {
-            printf "$BOARD_ID\n"
-            printf "#define BOARD_ID_RZV2H\t\t\t\t22\n"
-            printf "#define BOARD_ID_RZV2L\t\t\t\t33\n"
-            printf "#define BOARD_ID_RZPI\t\t\t\t44\n"
-            printf "#define BOARD_ID_RZG2L\t\t\t\t55\n"
-            printf "#define BOARD_ID_RZG2LC\t\t\t\t66\n"
-            printf "#define BOARD_ID_RZG2UL\t\t\t\t77\n"
-            printf "#define BOARD_ID_RZG2L100\t\t\t\t88\n"
-        } > "${BOARD_INFO_FILE}"
-    fi
-
-    sed -i "1s/.*/$BOARD_ID/" "${BOARD_INFO_FILE}"
-}
-
 function main_process(){
     BOARD=$1
     validate_board "${BOARD}"
     cd ${WORKPWD}
-    set_board_id $BOARD
     rm *.srec
     get_bootparameter
     check_extra_tools

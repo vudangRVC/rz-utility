@@ -3,12 +3,12 @@ source ./common.sh
 
 # Build all the components for a specific SoC type
 function main_process(){
-    SOC_TYPE=$1
-    validate_soc_type "${SOC_TYPE}"
-    ./build_flash_writer.sh  $SOC_TYPE
-    ./build_atf.sh  $SOC_TYPE
-    ./build_u-boot.sh  $SOC_TYPE
-    ./merge_ipl_file.sh  $SOC_TYPE
+    BOARD=$1
+    validate_board "${BOARD}"
+    ./build_flash_writer.sh $BOARD
+    ./build_atf.sh $BOARD
+    ./build_u-boot.sh $BOARD
+    ./merge_ipl_file.sh $BOARD
 }
 
 #--start--------
