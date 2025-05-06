@@ -68,8 +68,8 @@ mk_bootimage()
     fi
 
     # Create bl2_bp.bin
-    ./bootparameter ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin bl2_bp.bin
-    cat ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin >> bl2_bp.bin
+    ./bootparameter ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2_with_dtb-smarc.bin bl2_bp.bin
+    cat ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2_with_dtb-smarc.bin >> bl2_bp.bin
 
     # Convert to srec
     objcopy -O srec --adjust-vma=0x00011E00 --srec-forceS3 -I binary bl2_bp.bin bl2_bp_${SOC_TYPE}.srec

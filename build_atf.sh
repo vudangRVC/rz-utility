@@ -4,7 +4,7 @@ source ./common.sh
 ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
 ATF_BRANCH_RZPI="atf-pass-params"
 
-ATF_BRANCH_V2L="atf-pass-params-v2l"
+ATF_BRANCH_V2L="support_fconf-v2l"
 
 ATF_BRANCH_G2L="atf-pass-params-g2l"
 
@@ -44,7 +44,7 @@ mk_atf()
     make distclean
     if [ "${SOC_TYPE}" == "v2l" ] ; then
         echo "build atf for rzv2l"
-        make PLAT=v2l BOARD=smarc_pmic_2 bl2 bl31
+        make PLAT=v2l BOARD=smarc_rzv2l bl2_with_dtb bl31
     elif [ "${SOC_TYPE}" == "rzpi" ] ; then
         echo "build atf for rzpi"
         make -j12 PLAT=g2l BOARD=sbc_1 all
