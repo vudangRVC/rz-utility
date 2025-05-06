@@ -9,7 +9,7 @@ getcode_u-boot()
 {
     cd ${WORKPWD}/
     # download u-boot
-    if [ ! -d {UBOOT_DIR} ];then
+    if [ ! -d ${UBOOT_DIR} ]; then
         git clone $UBOOT_GIT_URL ${UBOOT_DIR} --jobs 16
     fi
     cd ${WORKPWD}/${UBOOT_DIR}
@@ -18,7 +18,7 @@ getcode_u-boot()
 
 mk_u-boot()
 {
-    SOC_TYPE=$1
+    BOARD=$1
     cd ${WORKPWD}/${UBOOT_DIR}/
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
     make clean
@@ -29,10 +29,10 @@ mk_u-boot()
 }
 
 function main_process(){
-    SOC_TYPE=$1
-    validate_soc_type "${SOC_TYPE}"
+    BOARD=$1
+    validate_board "${BOARD}"
     getcode_u-boot
-    mk_u-boot $SOC_TYPE
+    mk_u-boot $BOARD
 }
 
 #--start--------

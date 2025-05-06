@@ -17,20 +17,20 @@ ATF_DIR="trusted-firmware-a"
 UBOOT_DIR="uboot"
 BOOTPARAMETER_DIR="bootparameter_dir"
 
-validate_soc_type() {
-    SOC_TYPE=$1
-    case "${SOC_TYPE}" in
+validate_board() {
+    BOARD=$1
+    case "${BOARD}" in
         v2h|v2l|rzpi|g2l|g2l100)
             return 0
             ;;
         *)
-            echo "SOC_TYPE is not supported"
-            echo "Please use rzpi or v2l or g2l or v2h"
-            echo "example: ./all_build.sh v2h"
-            echo "example: ./all_build.sh rzpi"
-            echo "example: ./all_build.sh v2l"
-            echo "example: ./all_build.sh g2l"
-            echo "example: ./all_build.sh g2l100"
+            echo "BOARD is not supported"
+            echo "Please use one of: v2h, rzpi, v2l, g2l, g2l100"
+            echo "Example: ./all_build.sh v2h"
+            echo "Example: ./all_build.sh rzpi"
+            echo "Example: ./all_build.sh v2l"
+            echo "Example: ./all_build.sh g2l"
+            echo "Example: ./all_build.sh g2l100"
             exit 1
             ;;
     esac
