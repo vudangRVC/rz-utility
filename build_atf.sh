@@ -10,6 +10,8 @@ ATF_BRANCH_G2L="atf-pass-params-g2l"
 
 ATF_BRANCH_G2L100="atf-pass-params-g2l"
 
+ATF_BRANCH_V2H="rzv2h"
+
 getcode_atf()
 {
     BOARD=$1
@@ -29,6 +31,8 @@ getcode_atf()
         git checkout ${ATF_BRANCH_G2L}
     elif [ "${BOARD}" == "g2l100" ] ; then
         git checkout ${ATF_BRANCH_G2L100}
+    elif [ "${BOARD}" == "v2h" ] ; then
+        git checkout ${ATF_BRANCH_V2H}
     else
         echo "Error: Unsupported BOARD type: ${BOARD}"
         exit 1
@@ -45,16 +49,19 @@ mk_atf()
 
     if [ "${BOARD}" == "v2l" ] ; then
         echo "build atf for rzv2l"
-        make PLAT=v2l BOARD=smarc_rzv2l bl2_with_dtb bl31
+        make -j12 PLAT=v2l BOARD=smarc_rzv2l bl2_with_dtb bl31
     elif [ "${BOARD}" == "rzpi" ] ; then
         echo "build atf for rzpi"
         make -j12 PLAT=g2l BOARD=sbc_1 all
     elif [ "${BOARD}" == "g2l" ] ; then
         echo "build atf for g2l"
-        make PLAT=g2l BOARD=smarc_pmic_2 bl2 bl31
+        make -j12 PLAT=g2l BOARD=smarc_pmic_2 bl2 bl31
     elif [ "${BOARD}" == "g2l100" ] ; then
         echo "build atf for g2l100"
-        make PLAT=g2l BOARD=smarc_pmic_2 bl2 bl31
+        make -j12 PLAT=g2l BOARD=smarc_pmic_2 bl2 bl31
+    elif [ "${BOARD}" == "v2h" ] ; then
+        echo "build atf for v2h"
+        make -j12 PLAT=v2h BOARD=evk_1 ENABLE_STACK_PROTECTOR=default bl2 bl31
     else
         echo "Error: Unsupported BOARD type: ${BOARD}"
         exit 1
