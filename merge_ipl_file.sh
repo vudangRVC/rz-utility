@@ -65,8 +65,8 @@ mk_bootimage_v2h()
     objcopy -I binary -O srec --adjust-vma=0x08101E00 --srec-forceS3 bl2_bp_spi.bin bl2_bp_spi_${BOARD}.srec
 
     # Create bl2_bp.bin mmc
-    ./bptool build/${BOARD}/${BUILDMODE}/bl2.bin bp.bin 0x08103000 mmc
-    cat bp.bin build/${BOARD}/${BUILDMODE}/bl2.bin > bl2_bp_mmc.bin
+    ./bptool ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin bp.bin 0x08103000 mmc
+    cat bp.bin ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin > bl2_bp_mmc.bin
     objcopy -I binary -O srec --adjust-vma=0x08101E00 --srec-forceS3 bl2_bp_mmc.bin ${WORKPWD}/bl2_bp_mmc_${BOARD}.srec
 
     # Create fip.bin normal
