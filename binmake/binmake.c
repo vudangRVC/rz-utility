@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <sys/stat.h>
 #include "cjson/cJSON.h"
 
 #define MAX_STRING_LEN 255
@@ -174,5 +175,12 @@ int main(int argc, char *argv[]) {
     free(json_data);
 
     printf("Binary created: %s (board: %s)\n", output_path, board_name);
+    struct stat st;
+    if (stat(output_path, &st) == 0) {
+        printf("Output binary size: 0x%lx bytes\n", st.st_size);
+    } else {
+        perror("Could not determine output file size");
+    }
+
     return EXIT_SUCCESS;
 }
