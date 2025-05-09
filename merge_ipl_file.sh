@@ -54,8 +54,8 @@ mk_bootimage_v2h()
     BUILDMODE=release
 
     # Create bl2_bp.bin esd
-    ./bptool ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin bp.bin 0x08103000 esd
-    cat bp.bin ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin > bl2_bp_esd.bin
+    ./bptool ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2_with_dtb.bin bp.bin 0x08103000 esd
+    cat bp.bin ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2_with_dtb.bin > bl2_bp_esd.bin
     objcopy -I binary -O srec --adjust-vma=0x08101E00 --srec-forceS3 bl2_bp_esd.bin bl2_bp_esd_${BOARD}.srec
     cp bl2_bp_esd.bin bl2_bp_esd_${BOARD}.bin
 
