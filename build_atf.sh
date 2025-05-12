@@ -2,7 +2,7 @@
 source ./common.sh
 
 ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
-ATF_BRANCH_RZPI="atf-pass-params"
+ATF_BRANCH_RZPI="support_fconf-rzpi"
 
 ATF_BRANCH_V2L="support_fconf-v2l"
 
@@ -48,7 +48,7 @@ mk_atf()
         make PLAT=v2l BOARD=smarc_rzv2l bl2_with_dtb bl31
     elif [ "${BOARD}" == "rzpi" ] ; then
         echo "build atf for rzpi"
-        make -j12 PLAT=g2l BOARD=sbc_1 all
+        make -j12 PLAT=g2l BOARD=sbc_1 bl2_with_dtb bl31
     elif [ "${BOARD}" == "g2l" ] ; then
         echo "build atf for g2l"
         make PLAT=g2l BOARD=smarc_pmic_2 bl2 bl31

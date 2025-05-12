@@ -3,7 +3,7 @@
 source ./common.sh
 
 UBOOT_GIT_URL="git@github.com:vudangRVC/u-boot-sst.git"
-UBOOT_BRANCH="rz-support-multi-boards"
+UBOOT_BRANCH="styhead/rz-sbc"
 
 getcode_u-boot()
 {
@@ -23,7 +23,7 @@ mk_u-boot()
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
     make clean
     make distclean
-    make rz-multi-boards_defconfig
+    make rzpi_defconfig
     make -j12
     [ $? -ne 0 ] && log_error "Failed in ${UBOOT_DIR} ..." && exit
 }
