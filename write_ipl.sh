@@ -43,7 +43,7 @@ class FlashUtil:
 	# Setup Serial Port
 	def __setupSerialPort(self):
 		try:
-			self.__serialPort = serial.Serial(port=self.__args.serialPort, baudrate = self.__args.baudRate, timeout=15)
+			self.__serialPort = serial.Serial(port=self.__args.serialPort, baudrate = self.__args.baudRate, timeout=150)
 		except:
 			die(msg='Unable to open serial port.')
 
@@ -90,8 +90,32 @@ class FlashUtil:
 		time2 = time.time()
 		elapsed_time = time2 - time1
 		print(f"Elapsed time: Flash Writer: {elapsed_time:.6f} seconds")
-		# Changing speed to 921600 bps.
 		self.__serialPort.write('true\r'.encode())
+
+		# Erase QSPI flash
+		buf = self.__serialPort.read_until('>'.encode())
+		if not buf:
+			print("Returned value is not the expectation. Exiting.")
+			exit()
+		print(f'{buf.decode()}')
+		self.__serialPort.write('xcs\r'.encode())
+
+		buf = self.__serialPort.read_until('Clear OK?(y/n)'.encode())
+		if not buf:
+			print("Returned value is not the expectation. Exiting.")
+			exit()
+		print(f'{buf.decode()}')
+		self.__serialPort.write('y\r'.encode())
+
+		buf = self.__serialPort.read_until('complete!'.encode())
+		if not buf:
+			print("Returned value is not the expectation - 01. Exiting.")
+			exit()
+		print(f'{buf.decode()}')
+
+		self.__serialPort.write('\r\r'.encode())
+
+		# Changing speed to 921600 bps.
 		buf = self.__serialPort.read_until('>'.encode())
 		if not buf:
 			print("Returned value is not the expectation. Exiting.")
