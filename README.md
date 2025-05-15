@@ -1,22 +1,33 @@
-# Ipl_build_script
-Build IPL for rzv2l rzpi
+# RZ Utility
 
-# Install env
-sudo apt update
-sudo apt install binwalk -y
-sudo apt install python3-pip -y
-sudo pip3 install pyserial
-wget http://nz2.archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
-sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
+Useful scripts for RZ projects.
 
-# Build binaries for rzpi
-./all_build.sh rzpi 
+This repository holds scripts and tools to build various software stacks for RZ platforms.
 
-# Burn IPL for rzpi
-./write_ipl.sh --serial_port /dev/ttyUSB1 --image_writer Flash_Writer_SCIF_rzpi.mot --image_bl2 bl2_bp_rzpi.srec --image_fip fip_rzpi.srec
+## Hierarchy
 
-# Build binaries for rzv2l
-./all_build.sh v2l 
+```
+.
+├── local-build-script/
+├── README.md
+├── tools/
+└── universal-scripts/
 
-# Burn IPL for rzv2l
-./write_ipl.sh --serial_port /dev/ttyUSB1 --image_writer Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot --image_bl2 bl2_bp_v2l.srec --image_fip fip_v2l.srec
+4 directories, 1 file
+```
+
+### local-build-scripts
+
+This directory contains build scripts for all software stacks of the RZ Board Support Package (BSP).
+
+### tools
+
+A collection of useful tools for RZ platforms.
+
+### universal-scripts
+
+Scripts for flashing RZ images, compatible with both Windows and Linux OS.
+
+> [!IMPORTANT]
+> Refer to the README in each folder to understand the usage and configuration specific to scripts and tools.
+
