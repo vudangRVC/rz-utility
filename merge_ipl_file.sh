@@ -57,17 +57,17 @@ mk_bootimage_v2h()
     ./bptool ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin bp.bin 0x08103000 esd
     cat bp.bin ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin > bl2_bp_esd.bin
     objcopy -I binary -O srec --adjust-vma=0x08101E00 --srec-forceS3 bl2_bp_esd.bin bl2_bp_esd_${BOARD}.srec
-    cp bl2_bp_esd.bin bl2_bp_esd_${BOARD}.bin
+    mv -f bl2_bp_esd.bin bl2_bp_esd_${BOARD}.bin
 
     # Create bl2_bp.bin spi
-    ./bptool ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin bp.bin 0x08103000 spi
-    cat bp.bin ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin > bl2_bp_spi.bin
-    objcopy -I binary -O srec --adjust-vma=0x08101E00 --srec-forceS3 bl2_bp_spi.bin bl2_bp_spi_${BOARD}.srec
+    # ./bptool ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin bp.bin 0x08103000 spi
+    # cat bp.bin ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin > bl2_bp_spi.bin
+    # objcopy -I binary -O srec --adjust-vma=0x08101E00 --srec-forceS3 bl2_bp_spi.bin bl2_bp_spi_${BOARD}.srec
 
-    # Create bl2_bp.bin mmc
-    ./bptool build/${BOARD}/${BUILDMODE}/bl2.bin bp.bin 0x08103000 mmc
-    cat bp.bin build/${BOARD}/${BUILDMODE}/bl2.bin > bl2_bp_mmc.bin
-    objcopy -I binary -O srec --adjust-vma=0x08101E00 --srec-forceS3 bl2_bp_mmc.bin ${WORKPWD}/bl2_bp_mmc_${BOARD}.srec
+    # # Create bl2_bp.bin mmc
+    # ./bptool ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin bp.bin 0x08103000 mmc
+    # cat bp.bin ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin > bl2_bp_mmc.bin
+    # objcopy -I binary -O srec --adjust-vma=0x08101E00 --srec-forceS3 bl2_bp_mmc.bin ${WORKPWD}/bl2_bp_mmc_${BOARD}.srec
 
     # Create fip.bin normal
     ./fiptool create --align 16 --soc-fw ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl31.bin \
@@ -75,6 +75,7 @@ mk_bootimage_v2h()
     ./fiptool info fip.bin
     cp fip.bin ${WORKPWD}/fip_${BOARD}.bin
     objcopy -I binary -O srec --adjust-vma=0x44000000 --srec-forceS3 fip.bin ${WORKPWD}/fip_${BOARD}.srec
+    rm fip.bin bp.bin
     cd ${WORKPWD}
 }
 
