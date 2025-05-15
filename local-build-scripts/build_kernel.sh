@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source ./config.ini
+source ./usage.sh
 
 # Check Linux Kernel location
 if [ -z "${KERNEL_DIR}" ]; then
@@ -40,7 +41,6 @@ mk_image() {
         echo '|          Build IMAGE Yocto-standard        |'
         echo '|============================================|'
         make -j16 Image
-        echo "Build completed successfully"
 }
 
 mk_dtbs() {
@@ -48,7 +48,6 @@ mk_dtbs() {
         echo '|             Build device tree              |'
         echo '|============================================|'
         make -j8 dtbs
-        echo "Build completed successfully"
 }
 
 mk_full_image() {
@@ -62,7 +61,6 @@ mk_full_image() {
         echo '|             Build device tree              |'
         echo '|============================================|'
         make -j8 dtbs
-        echo "Build completed successfully"
 }
 
 mk_clean() {
@@ -96,37 +94,36 @@ mk_modules() {
 
 # Main Linux Kernel build
 echo "Starting the kernel build at ${KERNEL_DIR}"
-if [ -z "${1}" ]; then
-        exit 1
-else
-        cd "${KERNEL_DIR}" || exit 1
+cd "${KERNEL_DIR}" || exit 1
 
-        case ${1} in
-                'clean')
-                        mk_clean
-                        ;;
-                'distclean')
-                        mk_distclean
-                        ;;
-                'defconfig')
-                        mk_defconfig
-                        ;;
-                'menuconfig')
-                        mk_menuconfig
-                        ;;
-                'image')
-                        mk_image
-                        ;;
-                'dtbs')
-                        mk_dtbs
-                        ;;
-                'full-image')
-                        mk_full_image
-                        ;;
-                'modules')
-                        mk_modules
-                        ;;
-        esac
+case ${1} in
+        'clean')
+                mk_clean
+                ;;
+        'distclean')
+                mk_distclean
+                ;;
+        'defconfig')
+                mk_defconfig
+                ;;
+        'menuconfig')
+                mk_menuconfig
+                ;;
+        'image')
+                mk_image
+                ;;
+        'dtbs')
+                mk_dtbs
+                ;;
+        'all')
+                mk_full_image
+                ;;
+        'modules')
+                mk_modules
+                ;;
+        *)
+                show_help
+                ;;
+esac
 
-        exit 0
-fi
+exit 0
