@@ -10,7 +10,7 @@ ATF_BRANCH_G2L="atf-pass-params-g2l"
 
 ATF_BRANCH_G2L100="atf-pass-params-g2l"
 
-ATF_BRANCH_V2H="rzv2h"
+ATF_BRANCH_V2H="rzv2h-fconf"
 
 getcode_atf()
 {
@@ -61,7 +61,7 @@ mk_atf()
         make -j12 PLAT=g2l BOARD=smarc_pmic_2 bl2 bl31
     elif [ "${BOARD}" == "v2h" ] ; then
         echo "build atf for v2h"
-        make -j12 PLAT=v2h BOARD=evk_1 ENABLE_STACK_PROTECTOR=default bl2 bl31
+        make -j12 PLAT=v2h BOARD=v2h_evk_1 ENABLE_STACK_PROTECTOR=default bl2 bl2_with_dtb bl31
     else
         echo "Error: Unsupported BOARD type: ${BOARD}"
         exit 1
