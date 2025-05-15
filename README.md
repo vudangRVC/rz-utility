@@ -62,7 +62,7 @@ Run the following scripts to build the IPL binaries for each board.
 
 Use `write_ipl.sh` to flash IPL over UART.
 
-### RZPi
+### RZ-SBC
 
 ```bash
 ./write_ipl.sh \
@@ -106,8 +106,11 @@ Use `write_ipl.sh` to flash IPL over UART.
 
 ```bash
   lsblk
+  sudo dd if=/dev/zero of=/dev/sdb bs=512 seek=1 count=3000
+  sudo sync /dev/sdb
   sudo dd if=bl2_bp_esd_v2h.bin of=/dev/sdb bs=512 seek=1 conv=notrunc
   sudo dd if=fip_v2h.bin of=/dev/sdb bs=512 seek=768 conv=notrunc
+  sudo sync /dev/sdb
   sudo eject /dev/sdb
 ```
 
