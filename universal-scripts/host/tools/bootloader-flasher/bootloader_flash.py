@@ -14,11 +14,10 @@ import shlex
 from serial.tools.list_ports import comports
 
 class FlashUtil:
-	def __init__(self, boardName='rzg2l-sbc'):
+	def __init__(self):
 		self.__scriptDir = os.getcwd()
 		self.__rootDir = os.path.abspath(os.path.join(self.__scriptDir, '..', '..', '..'))
-		self.__boardName = boardName
-		self.__imagesDir = os.path.abspath(os.path.join(self.__rootDir, 'target', 'images', self.__boardName))
+		self.__imagesDir = os.path.abspath(os.path.join(self.__rootDir, 'target', 'images'))
 
 		self.__setupArgumentParser()
 

@@ -1,0 +1,25 @@
+{
+    "rzg2l-evk": {
+        "bl2": "bl2_bp-smarc-rzg2l_pmic.srec",
+        "dtb": "r9a07g044l2-smarc.dtb",
+        "rootfs": "core-image-minimal-rzg2l.wic",
+        "flash_writer": "Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot",
+        "flash_method": "qspi"
+    },
+
+    "rzg2l-sbc": {
+        "bl2": "bl2-rzpi.srec",
+        "dtb": "rzpi.dtb",
+        "rootfs": "core-image-qt-rzpi.wic",
+        "flash_writer": "Flash_Writer_SCIF_rzpi.mot",
+        "flash_method": "qspi"
+    },
+
+    "rzv2l-evk": {
+        "bl2": "bl2-rzv2l.srec",
+        "dtb": "rzv2l-smarc.dtb",
+        "rootfs": "core-image-minimal-rzv2l.wic",
+        "flash_writer": "Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_4GB.mot",
+        "flash_method": "qspi"
+    }
+}
