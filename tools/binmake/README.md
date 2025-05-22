@@ -3,21 +3,70 @@
 Build binmake tool:
 
 ```bash
-cd binmake
-make binmake
+mkdir build
+cd build
 ```
 
-- Output:
+- Windows OS:
+
+```bash
+> cmake -G "MinGW Makefiles" ..
+-- The C compiler identification is GNU 6.3.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/MinGW/bin/gcc.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Configuring done (2.0s)
+-- Generating done (0.0s)
+```
+
+- Linux OS:
+
+```bash
+$ cmake ..
+-- Toolchain file defaulted to '/opt/poky/3.1.14/sysroots/x86_64-pokysdk-linux/usr/share/cmake/OEToolchainConfig.cmake'
+-- The C compiler identification is GNU 9.4.0
+-- Check for working C compiler: /usr/bin/gcc
+-- Check for working C compiler: /usr/bin/gcc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/son/thanhnguyen/rz-utility/tools/binmake/build
+```
+
+Run the `make` command to compile the binmake tool.
+
+```bash
+$ make
+-- Configuring done (0.2s)
+-- Generating done (0.1s)
+-- Build files have been written to: C:/Users/thanh.nguyen-duy/Documents/Repository/Github-POCDEMO/Vudang/rz-utility/tools/binmake/build
+[ 33%] Building C object CMakeFiles/binmake.dir/binmake.c.obj
+[ 66%] Building C object CMakeFiles/binmake.dir/cjson/cJSON.c.obj
+[100%] Linking C executable binmake.exe
+[100%] Built target binmake
+```
+
+- Output files:
 
 ```bash
 binmake
-├── binmake                 <--- Target tool 
-├── binmake.c
-├── cjson
+├── build/
+│   ├── binmake                 <--- Target tool
+│   ├── CMakeCache.txt
+│   ├── cmake_install.cmake
+│   ├── libbinmake.dll.a
+│   └── Makefile
+├── cjson/
 │   ├── cJSON.c
 │   └── cJSON.h
-├── Makefile
-└── platform_info.json
+├── CMakeLists.txt
+├── platform_info.json
+└── README.md
 ```
 
 Convert platform_info.json into binary file for specific board:
@@ -25,26 +74,31 @@ Convert platform_info.json into binary file for specific board:
 If you're using RZ/G2L-SBC, run:
 
 ```bash
-./binmake --input=platform_info.json --board=RZG2L-SBC --output=RZG2L-SBC.bin
+./binmake --input=../platform_info.json --board=RZG2L-SBC --output=RZG2L-SBC.bin
 ```
 
 If you're using RZ/G2L-EVK, run:
 
 ```bash
-./binmake --input=platform_info.json --board=RZG2L-EVK --output=RZG2L-EVK.bin
+./binmake --input=../platform_info.json --board=RZG2L-EVK --output=RZG2L-EVK.bin
 ```
 
 - Output:
 
 ```bash
 binmake
-├── binmake
-├── binmake.c
-├── cjson
+├── build/
+│   ├── binmake
+│   ├── CMakeCache.txt
+│   ├── cmake_install.cmake
+│   ├── libbinmake.dll.a
+│   ├── Makefile
+│   ├── RZG2L-EVK.bin           <--- Output binary
+│   └── RZG2L-SBC.bin           <--- Output binary
+├── cjson/
 │   ├── cJSON.c
 │   └── cJSON.h
-├── Makefile
-├── RZG2L-SBC.bin           <--- Output binary 
-├── RZG2L-EVK.bin           <--- Output binary 
-└── platform_info.json
+├── CMakeLists.txt
+├── platform_info.json
+└── README.md
 ```
