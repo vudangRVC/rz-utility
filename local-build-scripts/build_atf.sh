@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source ./config.ini
-source ./usage.sh
+source ./common.sh
 
 # Check ATF location
 if [ -z "${ATF_DIR}" ]; then

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source ./config.ini
-source ./usage.sh
+source ./common.sh
 
 # Check Flash-Writer location
 if [ -z "${FLASH_WRITER_DIR}" ]; then
