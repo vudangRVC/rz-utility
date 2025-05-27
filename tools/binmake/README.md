@@ -1,6 +1,14 @@
 # Using binmake tool to convert platform_info.json into binary
 
-Build binmake tool:
+## Prerequisites:
+
+- CMake 
+  - To install CMake, please refer to [this page](https://cmake.org/download/) to download the setup file for your specific platform.
+- gcc
+  - For Windows install: please refer to [this page](https://sourceforge.net/projects/mingw/) to download the setup file.
+  - For Linux install: `sudo apt install build-essential`
+
+## Build binmake tool:
 
 ```bash
 mkdir build
@@ -38,7 +46,7 @@ $ cmake ..
 -- Build files have been written to: /home/son/thanhnguyen/rz-utility/tools/binmake/build
 ```
 
-Run the `make` command to compile the binmake tool.
+## Run the `make` command to compile the binmake tool.
 
 ```bash
 $ make
@@ -69,7 +77,7 @@ binmake
 └── README.md
 ```
 
-Convert platform_info.json into binary file for specific board:
+## Convert platform_info.json into binary file for specific board:
 
 If you're using RZ/G2L-SBC, run:
 
