@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source ./config.ini
-source ./usage.sh
+source ./common.sh
 
 # Check Linux Kernel location
 if [ -z "${KERNEL_DIR}" ]; then

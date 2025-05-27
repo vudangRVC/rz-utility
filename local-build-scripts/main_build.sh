@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source ./config.ini
-source ./usage.sh
+source ./common.sh
 
 # POKY setup
 if [ ! -d "${SDK_LOCATION}" ];then
