@@ -1,7 +1,7 @@
 #!/bin/bash
 
 source ./config.ini
-source ./usage.sh
+source ./common.sh
 
 # Check U-Boot location
 if [ -z "${UBOOT_DIR}" ]; then
