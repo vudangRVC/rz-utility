@@ -50,6 +50,12 @@ Run the following scripts to build the IPL binaries for each board.
 ./all_build.sh g2l100
 ```
 
+### RZ/V2H
+
+```bash
+./all_build.sh v2h
+```
+
 ---
 
 ## Flashing Instructions
@@ -94,6 +100,17 @@ Use `write_ipl.sh` to flash IPL over UART.
   --image_writer Flash_Writer_SCIF_RZG2L_15MMSQ_DEV_DDR4_4GB.mot \
   --image_bl2 bl2_bp_g2l100.srec \
   --image_fip fip_g2l100.srec
+```
+
+### RZ/V2H - Burn to SD card
+
+```bash
+lsblk
+sudo dd if=/dev/zero of=/dev/sdX bs=512 seek=1 count=3000
+sudo sync /dev/sdX
+sudo dd if=bl2_bp_esd_v2h.bin of=/dev/sdX bs=512 seek=1 conv=notrunc
+sudo dd if=fip_v2h.bin of=/dev/sdX bs=512 seek=768 conv=notrunc
+sudo sync /dev/sdX
 ```
 
 ---

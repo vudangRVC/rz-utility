@@ -5,10 +5,15 @@ source ./common.sh
 function main_process(){
     BOARD=$1
     validate_board "${BOARD}"
-    ./build_flash_writer.sh $BOARD
     ./build_atf.sh $BOARD
     ./build_u-boot.sh $BOARD
-    ./merge_ipl_file.sh $BOARD
+
+    if [ "${BOARD}" == "v2h" ] ; then
+        ./v2h_merge_ipl_file.sh $BOARD
+    else
+        ./build_flash_writer.sh $BOARD
+        ./merge_ipl_file.sh $BOARD
+    fi
 }
 
 #--start--------
