@@ -50,9 +50,9 @@ When no arguments are provided, the script will use the following default info:
   - Serial port: most recently connected port (E.g: COM8 in Windows or /dev/ttyUSB0 in Linux)
   - Serial port baud: 115200
 - File paths for the images:
-  - Flash Writer Image: </path/to/your/package>/target/images/Flash_Writer_SCIF_rzpi.mot
-  - BL2 Image: </path/to/your/package>/target/images/bl2_bp-rzpi.srec
-  - FIP Image: </path/to/your/package>/target/images/fip-rzpi.srec
+  - Flash Writer Image: </path/to/your/package>/target/images/Flash_Writer_SCIF_rzg2l-sbc.mot
+  - BL2 Image: </path/to/your/package>/target/images/bl2_bp-rzg2l-sbc.srec
+  - FIP Image: </path/to/your/package>/target/images/fip-rzg2l-sbc.srec
   - Board identification Image: </path/to/your/package>/target/images/rzg2l-sbc-platform-settings.bin
 
 Ensure that these files are present in the current directory before executing the script.
@@ -77,13 +77,13 @@ If you want to specify different file paths or change the serial port settings o
 - Windows:
 
 ```
-py bootloader_flash.py --board_name rzg2l-evk --flash_method emmc --serial_port COM11 --serial_port_baud 9600 --image_writer D:\rz-sbc\rzpi\custom_images\Flash_Writer_SCIF_rzpi.mot --image_bl2 D:\rz-sbc\rzpi\custom_images\bl2_bp-rzpi.srec --image_fip D:\rz-sbc\rzpi\custom_images\fip-rzpi.srec --image_bid D:\rz-sbc\rzpi\custom_images\rzg2l-evk-platform-settings.bin
+py bootloader_flash.py --board_name rzg2l-evk --flash_method emmc --serial_port COM11 --serial_port_baud 9600 --image_writer D:\rz-sbc\rzg2l-sbc\custom_images\Flash_Writer_SCIF_rzg2l-sbc.mot --image_bl2 D:\rz-sbc\rzg2l-sbc\custom_images\bl2_bp-rzg2l-sbc.srec --image_fip D:\rz-sbc\rzg2l-sbc\custom_images\fip-rzg2l-sbc.srec --image_bid D:\rz-sbc\rzg2l-sbc\custom_images\rzg2l-evk-platform-settings.bin
 ```
 
 - Linux:
 
 ```
-python3 bootloader_flash.py --board_name rzg2l-evk --flash_method emmc --serial_port /dev/ttyUSB0 --serial_port_baud 9600 --image_writer /home/renesas/bootloader_images/Flash_Writer_SCIF_rzpi.mot --image_bl2 /home/renesas/bootloader_images/bl2_bp-rzpi.srec --image_fip /home/renesas/bootloader_images/fip-rzpi.srec --image_bid /home/renesas/bootloader_images/rzg2l-evk-platform-settings.bin
+python3 bootloader_flash.py --board_name rzg2l-evk --flash_method emmc --serial_port /dev/ttyUSB0 --serial_port_baud 9600 --image_writer /home/renesas/bootloader_images/Flash_Writer_SCIF_rzg2l-sbc.mot --image_bl2 /home/renesas/bootloader_images/bl2_bp-rzg2l-sbc.srec --image_fip /home/renesas/bootloader_images/fip-rzg2l-sbc.srec --image_bid /home/renesas/bootloader_images/rzg2l-evk-platform-settings.bin
 ```
 
 If which arguments is not passed, the default value will be used.
@@ -92,4 +92,4 @@ If which arguments is not passed, the default value will be used.
 
 3.Power on the board with a 5V. It will start to flash bootloader images into QSPI flash.
 
-Wait for the script running automatically, and no input or operation is required during this period. After completing the process, you can set RZ SBC board to boot from QSPI as your needs.
+Wait for the script running automatically, and no input or operation is required during this period. After completing the process, you can set RZ board to boot from QSPI as your needs.

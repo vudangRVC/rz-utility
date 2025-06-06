@@ -82,7 +82,7 @@ class UloadFlashUtil:
 		self.__serialRead('=>')
 
 		# loading bl2...
-		self.__writeSerialCmd('ext4load mmc 0:2 0x48000000 boot/uload-bootloader/bl2_bp-rzpi.bin')
+		self.__writeSerialCmd('ext4load mmc 0:1 0x48000000 boot/uload-bootloader/bl2_bp-rzg2l-sbc.bin')
 		self.__serialRead('MiB/s)')
 
 		# true
@@ -98,7 +98,7 @@ class UloadFlashUtil:
 		self.__serialRead('=>')
 
 		# loading fip...
-		self.__writeSerialCmd('ext4load mmc 0:2 0x48000000 boot/uload-bootloader/fip-rzpi.bin')
+		self.__writeSerialCmd('ext4load mmc 0:1 0x48000000 boot/uload-bootloader/fip-rzg2l-sbc.bin')
 		self.__serialRead('MiB/s)')
 
 		# true
