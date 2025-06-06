@@ -8,6 +8,19 @@ This script offers cross-platform support (for both Windows and Linux operating 
 - Flashing the uload-bootloader
 - Flashing the Root Filesystem (rootfs) to an SD card
 
+## Prerequisites:
+
+- python
+  - For Windows install: please refer to [this page](https://www.python.org/downloads/) to download the setup file.
+  - For Linux install: `sudo apt install python3`
+
+- python packages: Follows package is required to be using the flashing script. Please install if one of them is missing:
+
+```
+pip install pyserial
+pip install dataclasses (if using python <3.7)
+```
+
 ---
 
 ## JSON Configuration for a New Board
