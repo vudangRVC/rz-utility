@@ -91,23 +91,23 @@ class BootloaderFlashUtil:
 
 		# Images
 		self.__parser.add_argument('--image_writer',
-									default=f'{self.__imagesDir}/Flash_Writer_SCIF_rzpi.mot',
+									default=f'{self.__imagesDir}/Flash_Writer_SCIF_rzg2l-sbc.mot',
 									dest='flashWriterImage',
 									action='store',
 									type=str,
-									help="Path to Flash Writer image (defaults to: <path/to/your/package>/target/images/Flash_Writer_SCIF_rzpi.mot).")
+									help="Path to Flash Writer image (defaults to: <path/to/your/package>/target/images/Flash_Writer_SCIF_rzg2l-sbc.mot).")
 		self.__parser.add_argument('--image_bl2',
-									default=f'{self.__imagesDir}/bl2_bp-rzpi.srec',
+									default=f'{self.__imagesDir}/bl2_bp-rzg2l-sbc.srec',
 									dest='bl2Image',
 									action='store',
 									type=str,
-									help='Path to bl2 image (defaults to: <path/to/your/package>/target/images/bl2_bp-rzpi.srec).')
+									help='Path to bl2 image (defaults to: <path/to/your/package>/target/images/bl2_bp-rzg2l-sbc.srec).')
 		self.__parser.add_argument('--image_fip',
-									default=f'{self.__imagesDir}/fip-rzpi.srec',
+									default=f'{self.__imagesDir}/fip-rzg2l-sbc.srec',
 									dest='fipImage',
 									action='store',
 									type=str,
-									help='Path to FIP image (defaults to: <path/to/your/package>/target/images/fip-rzpi.srec).')
+									help='Path to FIP image (defaults to: <path/to/your/package>/target/images/fip-rzg2l-sbc.srec).')
 		self.__parser.add_argument('--image_bid',
 									default=f'{self.__imagesDir}/rzg2l-sbc-platform-settings.bin',
 									dest='bidImage',

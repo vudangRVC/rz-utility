@@ -32,12 +32,12 @@ python3 uload_bootloader_flash.py -h
 
 1. Place all bootloader images in the /boot/uload-bootloader SD card folder (optional).
 
-We've already prepared these images (.bin) in the /boot/uload-bootloader folder on the SD card. If you want to change the images, replace these files.
+We have already prepared the .bin images in the /boot/uload-bootloader folder on partition 1 (FAT32) of the SD card. If you want to update the images, replace the files in this folder using the correct partition.
 
 The `/boot/uload-bootloader` folder should contain the following files:
 
-- fip-rzpi.bin
-- bl2_bp-rzpi.bin
+- fip-rzg2l-sbc.bin
+- bl2_bp-rzg2l-sbc.bin
 
 Or you can using the sd_creator/sd_flash.py script to program Filesystem Image to SD Card.
 
@@ -77,17 +77,17 @@ If you want to change the serial port settings, you can pass the arguments as sh
 - Windows:
 
 ```
-py bootloader_flash.py --serial_port COM11 --serial_port_baud 9600
+py uload_bootloader_flash.py --serial_port COM11 --serial_port_baud 9600
 ```
 
 - Linux:
 
 ```
-python3 bootloader_flash.py --serial_port /dev/ttyUSB0 --serial_port_baud 9600
+python3 uload_bootloader_flash.py --serial_port /dev/ttyUSB0 --serial_port_baud 9600
 ```
 
 2. Connect debug serial (SCIF0 - TXD,RXD,GND) to Host PC.
 
 3. Power on the board with a 5V. It will start to load bootloader images from uboot into QSPI flash.
 
-Wait for the script running automatically, and no input or operation is required during this period. After completing the process, you can set RZ SBC board to boot from QSPI as your needs.
+Wait for the script running automatically, and no input or operation is required during this period. After completing the process, you can set RZ board to boot from QSPI as your needs.

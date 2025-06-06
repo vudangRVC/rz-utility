@@ -57,7 +57,7 @@ When no arguments are provided, the script will use the following default info:
 - IP address: 169.254.187.89
 - Serial port: most recently connected port (E.g: COM8 in Windows or /dev/ttyUSB0 in Linux)
 - Serial port baud: 115200
-- WIC file: </path/to/your/package>/target/images/core-image-qt-rzpi.wic
+- WIC file: </path/to/your/package>/target/images/core-image-qt-rzg2l-sbc.wic
 
 Ensure that these files are present in the current directory before executing the script.
 
@@ -78,13 +78,13 @@ If you want to specify different file paths for the image, you can pass the argu
 - Windows:
 
 ```
-py sd_flash.py --board_name rzg2l-evk --fastboot_type udp --ip_address 169.254.187.9 --ether_port 1 --serial_port COM11 --serial_port_baud 9600 --image_rootfs D:\rz-sbc\rzpi\custom_images\core-image-qt-rzpi.wic
+py sd_flash.py --board_name rzg2l-evk --fastboot_type udp --ip_address 169.254.187.9 --ether_port 1 --serial_port COM11 --serial_port_baud 9600 --image_rootfs D:\rz-sbc\rzg2l-sbc\custom_images\core-image-qt-rzg2l-sbc.wic
 ```
 
 - Linux:
 
 ```
-python3 sd_flash.py --board_name rzg2l-evk --fastboot_type udp --ip_address 169.254.187.9 --ether_port 1 --serial_port /dev/ttyUSB0 --serial_port_baud 9600 --image_rootfs /home/renesas/bootloader_images/core-image-qt-rzpi.wic
+python3 sd_flash.py --board_name rzg2l-evk --fastboot_type udp --ip_address 169.254.187.9 --ether_port 1 --serial_port /dev/ttyUSB0 --serial_port_baud 9600 --image_rootfs /home/renesas/bootloader_images/core-image-qt-rzg2l-sbc.wic
 ```
 
 2.Connect debug serial (SCIF0 - TXD,RXD,GND) to Host PC.
