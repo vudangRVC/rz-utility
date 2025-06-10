@@ -91,6 +91,12 @@ If you're using RZ/G2L-EVK, run:
 ./binmake --input=../platform_info.json --board=RZG2L-EVK --output=RZG2L-EVK.bin
 ```
 
+If you're using RZ/V2H-EVK1, run:
+
+```bash
+./binmake --input=../platform_info.json --board=RZV2H-EVK1 --output=RZV2H-EVK1.bin
+```
+
 - Output:
 
 ```bash
@@ -103,6 +109,7 @@ binmake
 │   ├── Makefile
 │   ├── RZG2L-EVK.bin           <--- Output binary
 │   └── RZG2L-SBC.bin           <--- Output binary
+│   └── RZV2H-EVK1.bin          <--- Output binary
 ├── cjson/
 │   ├── cJSON.c
 │   └── cJSON.h
