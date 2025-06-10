@@ -17,6 +17,14 @@ class UloadFlashUtil:
 		self.__parser = argparse.ArgumentParser(description='Util to flash bootloader from U-Boot console on RZ Board.\n', epilog='Example:\n\t./uload_bootloader_flash.py')
 
 		# Add arguments
+		# Board name
+		self.__parser.add_argument('--board_name',
+									default='rzg2l-sbc',
+									dest='boardName',
+									action='store',
+									type=str,
+									help='Board name to flash bootloader (defaults to: rzg2l-sbc).')
+
 		# Serial port arguments
 		self.__parser.add_argument('--serial_port',
 									default=None,
@@ -82,7 +90,7 @@ class UloadFlashUtil:
 		self.__serialRead('=>')
 
 		# loading bl2...
-		self.__writeSerialCmd('fatload mmc 0:1 0x48000000 boot/uload-bootloader/bl2_bp-rzg2l-sbc.bin')
+		self.__writeSerialCmd(f'fatload mmc 0:1 0x48000000 uload-bootloader/bl2_bp_{self.__args.boardName}.bin')
 		self.__serialRead('MiB/s)')
 
 		# true
@@ -98,7 +106,7 @@ class UloadFlashUtil:
 		self.__serialRead('=>')
 
 		# loading fip...
-		self.__writeSerialCmd('fatload mmc 0:1 0x48000000 boot/uload-bootloader/fip-rzg2l-sbc.bin')
+		self.__writeSerialCmd(f'fatload mmc 0:1 0x48000000 uload-bootloader/fip_{self.__args.boardName}.bin')
 		self.__serialRead('MiB/s)')
 
 		# true

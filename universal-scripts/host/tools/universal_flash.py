@@ -149,6 +149,7 @@ class UniversalFlashUtil:
                 '--serial_port', f"{self.selected_port}",
                 '--serial_port_baud', f"{self.selected_baud_rate}",
                 '--fastboot_type', f"{self.selected_info.rootfs_flash_method}",
+                '--ether_port', "1",
                 '--image_rootfs', f"{self.__imagesDir}/{self.selected_info.rootfs}",
                 '--ip_address', f"{self.selected_ip_address}",
             ]
@@ -178,6 +179,7 @@ class UniversalFlashUtil:
                 # Write uload bootloader
                 print("Writing IPL by Uload bootloader...\n")
                 uload_bootloader_args = [
+                    '--board_name', f"{self.selected_board_name}",
                     '--serial_port', f"{self.selected_port}",
                     '--serial_port_baud', f"{self.selected_baud_rate}"
                 ]

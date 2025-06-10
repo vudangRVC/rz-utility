@@ -315,7 +315,10 @@ class BootloaderFlashUtil:
 
 		print("Writing fip ...")
 		self.__writeFileToSerial(self.__args.fipImage)
-		self.__serialRead('>')
+		if (self.__serialPort.read_until('Clear OK'.encode())):
+			self.__writeSerialCmd('y')
+		else:
+			self.__serialRead('>')
 
 		# Write board identification
 		BIDFlashAddress = flashAddress["BID"]
@@ -329,7 +332,10 @@ class BootloaderFlashUtil:
 
 		print("Writing board identification...")
 		self.__writeFileToSerial(self.__args.bidImage)
-		self.__serialRead('>')
+		if (self.__serialPort.read_until('Clear OK'.encode())):
+			self.__writeSerialCmd('y')
+		else:
+			self.__serialRead('>')
 
 	def __writeSerialCmd(self, cmd):
 		self.__serialPort.write(f'{cmd}\r'.encode())
