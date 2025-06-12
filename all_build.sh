@@ -5,6 +5,10 @@ source ./common.sh
 function main_process(){
     BOARD=$1
     validate_board "${BOARD}"
+    ./build_board_id.sh $BOARD
+
+    set_toolchain
+
     ./build_atf.sh $BOARD
     ./build_u-boot.sh $BOARD
 

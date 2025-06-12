@@ -45,6 +45,7 @@ mk_flash-writer()
 function main_process(){
     BOARD=$1
     validate_board "${BOARD}"
+    set_toolchain
     getcode_flash-writer $BOARD
     mk_flash-writer  $BOARD
 }

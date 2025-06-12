@@ -3,7 +3,6 @@
 source ./common.sh
 
 UBOOT_GIT_URL="git@github.com:vudangRVC/u-boot-sst.git"
-UBOOT_BRANCH="styhead/rz-sbc"
 
 UBOOT_BRANCH_RZPI="styhead/rz-sbc"
 UBOOT_BRANCH_V2L="styhead/rz-sbc"
@@ -64,6 +63,7 @@ mk_u-boot()
 function main_process(){
     BOARD=$1
     validate_board "${BOARD}"
+    set_toolchain
     getcode_u-boot
     mk_u-boot $BOARD
 }

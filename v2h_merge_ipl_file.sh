@@ -59,9 +59,9 @@ mk_bootimage_v2h()
     mv -f bl2_bp_esd.bin bl2_bp_esd_${BOARD}.bin
 
     # Create bl2_bp.bin spi
-    # ./bptool ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin bp.bin 0x08103000 spi
-    # cat bp.bin ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin > bl2_bp_spi.bin
-    # objcopy -I binary -O srec --adjust-vma=0x08101E00 --srec-forceS3 bl2_bp_spi.bin bl2_bp_spi_${BOARD}.srec
+    ./bptool ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin bp.bin 0x08103000 spi
+    cat bp.bin ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin > bl2_bp_spi.bin
+    objcopy -I binary -O srec --adjust-vma=0x08101E00 --srec-forceS3 bl2_bp_spi.bin bl2_bp_spi_${BOARD}.srec
 
     # # Create bl2_bp.bin mmc
     # ./bptool ${WORKPWD}/${ATF_DIR}/build/${BOARD}/${BUILDMODE}/bl2.bin bp.bin 0x08103000 mmc
@@ -125,8 +125,8 @@ function main_process(){
     BOARD=$1
     validate_board "${BOARD}"
     cd ${WORKPWD}
-    rm *.srec 
-    rm *.bin
+    rm bl2*.srec fip*.srec
+    rm bl2*.bin fip*.bin 
     get_bootparameter
     check_extra_tools
     mk_bootimage ${BOARD}
