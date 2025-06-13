@@ -125,8 +125,6 @@ function main_process(){
     BOARD=$1
     validate_board "${BOARD}"
     cd ${WORKPWD}
-    rm bl2*.srec fip*.srec
-    rm bl2*.bin fip*.bin 
     get_bootparameter
     check_extra_tools
     mk_bootimage ${BOARD}
