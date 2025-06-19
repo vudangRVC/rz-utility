@@ -21,6 +21,10 @@ pip install pyserial
 pip install dataclasses (if using python <3.7)
 ```
 
+- wic image: Prepare your own rootfs wic image under `target\images` folder
+```bash
+cp </path/to/your/package>/core-image-minimal.wic /path/to/universal-scripts/target/images/
+```
 ---
 
 ## JSON Configuration for a New Board

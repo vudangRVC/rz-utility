@@ -50,6 +50,18 @@ class BootloaderFlashUtil:
 					"BID": ["1", "200", "1C700", "250", "122"],
 				}
 			},
+			"rzv2h-evk": {
+				"QSPI": {
+					"BL2": ["8101E00", "00000"],
+					"FIP": ["00000", "60000"],
+					"BID": ["00000", "120000"]
+				},
+				"eMMC": {
+					"BL2": ["1", "1",   "8101E00"],
+					"FIP": ["1", "100", "00000", "2",   "8"],
+					"BID": ["1", "200", "120000", "762", "762"],
+				}
+			},
 		}
 
 		self.__setupArgumentParser(args)
@@ -141,6 +153,27 @@ class BootloaderFlashUtil:
 		except:
 			die(msg='Unable to open serial port 921600 bps.')
 
+	def __wait_for_prompt(self, timeout=30):
+		end_time = time.time() + timeout
+		buffer = b""
+		sent_y = False
+
+		while time.time() < end_time:
+			if self.__serialPort.in_waiting:
+				buffer += self.__serialPort.read(self.__serialPort.in_waiting)
+				decoded = buffer.decode(errors='ignore')
+
+				if not sent_y and "Clear OK" in decoded:
+					self.__writeSerialCmd('y')
+					sent_y = True  # prevent sending again
+
+				if ">" in decoded:
+					break
+
+			time.sleep(0.1)
+
+		print(f'{buffer.decode()}')
+
 	# Function to write bootloader
 	def writeBootloader(self):
 		start_time = time.time()
@@ -155,6 +188,9 @@ class BootloaderFlashUtil:
 		if not os.path.exists(self.__args.fipImage):
 			print(f"The file {self.__args.fipImage} does not exist.")
 			exit()
+		if not os.path.exists(self.__args.bidImage):
+			print(f"The file {self.__args.bidImage} does not exist.")
+			exit()
 
 		flashAddress = self.__flashAddress[self.__args.boardName]
 		if flashAddress is None:
@@ -163,7 +199,10 @@ class BootloaderFlashUtil:
 
 		# Wait for device to be ready to receive image.
 		print("Please power on board. Make sure you changed switches to SCIF download mode.")
-		self.__serialRead('please send !')
+		if (self.__args.boardName == "rzv2h-evk"):
+			self.__serialRead('Load Program to SRAM')
+		else:
+			self.__serialRead('please send !')
 
 		# Write flash writer application
 		time1 = time.time()
@@ -275,10 +314,9 @@ class BootloaderFlashUtil:
 		self.__serialRead('>')
 
 	def __handle_qspi_flash(self, flashAddress):
-		self.__writeSerialCmd('XCS')
-		self.__serialRead('Clear OK?')
-		self.__writeSerialCmd('y')
-		self.__serialRead('>')
+		if not (self.__args.boardName == "rzv2h-evk"):
+			self.__writeSerialCmd('XCS')
+			self.__wait_for_prompt(60)
 
 		# Changing speed to 921600 bps.
 		self.__writeSerialCmd('SUP')
@@ -315,21 +353,24 @@ class BootloaderFlashUtil:
 
 		print("Writing fip ...")
 		self.__writeFileToSerial(self.__args.fipImage)
-		self.__serialRead('>')
+		self.__wait_for_prompt()
 
 		# Write board identification
 		BIDFlashAddress = flashAddress["BID"]
-		self.__writeSerialCmd('XLS3')
+		if (self.__args.bidImage.endswith('.srec')):
+			self.__writeSerialCmd('XLS2')
+		else:
+			self.__writeSerialCmd('XLS3')
 		self.__serialRead('Please Input : H')
 		self.__writeSerialCmd(BIDFlashAddress[0])
 
 		self.__serialRead('Please Input : H')
 		self.__writeSerialCmd(BIDFlashAddress[1])
-		self.__serialRead('please send ! (binary)')
+		self.__serialRead('please send !')
 
 		print("Writing board identification...")
 		self.__writeFileToSerial(self.__args.bidImage)
-		self.__serialRead('>')
+		self.__wait_for_prompt()
 
 	def __writeSerialCmd(self, cmd):
 		self.__serialPort.write(f'{cmd}\r'.encode())

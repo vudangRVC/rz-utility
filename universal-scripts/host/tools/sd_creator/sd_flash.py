@@ -20,6 +20,7 @@ class SdFlashUtil:
 			"rzg2l-sbc": ["11c20000", "11c30000"],
 			"rzg2l-evk": ["11c20000", "11c30000"],
 			"rzv2l-evk": ["11c20000", "11c30000"],
+			"rzv2h-evk": ["15c30000", "15c40000"],
 		}
 
 		if platform.system() == "Windows":
