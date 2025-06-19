@@ -142,6 +142,7 @@ class UniversalFlashUtil:
             print("Writing rootfs...")
             if (self.selected_info.rootfs_flash_method == "udp"):
                 self.selected_ip_address = input(f"Enter IP address for fastboot udp (default {self.selected_ip_address}): ") or self.selected_ip_address
+                ether_port = input("Enter the Ethernet port number (default 1): ") or "1"
 
             # Prepare arguments for SD Flash
             sdflash_args = [
@@ -149,6 +150,7 @@ class UniversalFlashUtil:
                 '--serial_port', f"{self.selected_port}",
                 '--serial_port_baud', f"{self.selected_baud_rate}",
                 '--fastboot_type', f"{self.selected_info.rootfs_flash_method}",
+                '--ether_port', ether_port,
                 '--image_rootfs', f"{self.__imagesDir}/{self.selected_info.rootfs}",
                 '--ip_address', f"{self.selected_ip_address}",
             ]
@@ -178,6 +180,7 @@ class UniversalFlashUtil:
                 # Write uload bootloader
                 print("Writing IPL by Uload bootloader...\n")
                 uload_bootloader_args = [
+                    '--board_name', f"{self.selected_board_name}",
                     '--serial_port', f"{self.selected_port}",
                     '--serial_port_baud', f"{self.selected_baud_rate}"
                 ]

@@ -30,10 +30,14 @@ python3 sd_flash.py -h
 
 Please following below steps:
 
-1. Hardware connection to each type of fastboot:
+1. Prepare your own rootfs wic image under `target\images` folder
+```bash
+cp </path/to/your/package>/core-image-minimal.wic /path/to/universal-scripts/target/images/
+```
+2. Hardware connection to each type of fastboot:
    - [UDP] Connect the Ethernet port 1 to the board
    - [OTG] Connect the PC USB port to the USB OTG port onboard
-2. Running the script
+3. Running the script
 
 ### Basic Usage
 
@@ -57,7 +61,7 @@ When no arguments are provided, the script will use the following default info:
 - IP address: 169.254.187.89
 - Serial port: most recently connected port (E.g: COM8 in Windows or /dev/ttyUSB0 in Linux)
 - Serial port baud: 115200
-- WIC file: </path/to/your/package>/target/images/core-image-qt-rzg2l-sbc.wic
+- WIC file: </path/to/your/package>/target/images/core-image-minimal.wic
 
 Ensure that these files are present in the current directory before executing the script.
 
@@ -78,13 +82,13 @@ If you want to specify different file paths for the image, you can pass the argu
 - Windows:
 
 ```
-py sd_flash.py --board_name rzg2l-evk --fastboot_type udp --ip_address 169.254.187.9 --ether_port 1 --serial_port COM11 --serial_port_baud 9600 --image_rootfs D:\rz-sbc\rzg2l-sbc\custom_images\core-image-qt-rzg2l-sbc.wic
+py sd_flash.py --board_name rzg2l-evk --fastboot_type udp --ip_address 169.254.187.9 --ether_port 1 --serial_port COM11 --serial_port_baud 9600 --image_rootfs D:\rz-sbc\rzg2l-sbc\custom_images\core-image-minimal.wic
 ```
 
 - Linux:
 
 ```
-python3 sd_flash.py --board_name rzg2l-evk --fastboot_type udp --ip_address 169.254.187.9 --ether_port 1 --serial_port /dev/ttyUSB0 --serial_port_baud 9600 --image_rootfs /home/renesas/bootloader_images/core-image-qt-rzg2l-sbc.wic
+python3 sd_flash.py --board_name rzg2l-evk --fastboot_type udp --ip_address 169.254.187.9 --ether_port 1 --serial_port /dev/ttyUSB0 --serial_port_baud 9600 --image_rootfs /home/renesas/bootloader_images/core-image-minimal.wic
 ```
 
 2.Connect debug serial (SCIF0 - TXD,RXD,GND) to Host PC.
