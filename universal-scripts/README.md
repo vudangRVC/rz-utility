@@ -2,7 +2,7 @@
 
 Scripts for flashing RZ images, compatible with both Windows and Linux OS.
 
-Folder hierarchy:
+# Folder hierarchy:
 
 ```shell
 universal_scripts
@@ -22,14 +22,21 @@ universal_scripts
 │       └── universal_flash.py
 └── target
     └── images
+        ├── bl2_bp_rzg2l-evk.srec
+        ├── bl2_bp_rzv2l-evk.srec
+        ├── bl2_bp_spi_rzv2h-evk.srec
         ├── bl2_bp-rzg2l-sbc.srec
-        ├── bl2_bp-smarc-rzg2l_pmic.srec
-        ├── core-image-minimal-rzg2l.wic
-        ├── core-image-qt-rzg2l-sbc.wic
-        ├── fip-rzg2l-sbc.srec
-        ├── fip-smarc-rzg2l_pmic.srec
-        ├── Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot
+        ├── fip_rzg2l-evk.srec
+        ├── fip_rzg2l-sbc.srec
+        ├── fip_rzv2h-evk.srec
+        ├── fip_rzv2l-evk.srec
+        ├── Flash_Writer_SCIF_rzg2l-evk_PMIC.mot
         ├── Flash_Writer_SCIF_rzg2l-sbc.mot
-        ├── r9a07g044l2-smarc.dtb
-        └── rzg2l-sbc.dtb
+        ├── Flash_Writer_SCIF_RZV2H_DEV_INTERNAL_MEMORY.mot
+        ├── Flash_Writer_SCIF_rzv2l-evk_PMIC.mot
+        ├── rzg2l-evk-platform-settings.bin
+        ├── rzg2l-sbc-platform-settings.bin
+        ├── rzv2h-evk-platform-settings.srec
+        ├── rzv2l-evk-platform-settings.bin
+        └── README.md
 ```

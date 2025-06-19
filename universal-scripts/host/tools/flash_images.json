@@ -1,29 +1,38 @@
 {
     "rzv2l-evk": {
-        "bl2": "bl2-rzv2l.bin",
-        "board_identification": "rzv2l-platform-settings.bin",
-        "fip": "fip-smarc-rzv2l_pmic.srec",
-        "flash_writer": "flash_writer_rzv2l.srec",
+        "bl2": "bl2_bp_rzv2l-evk.srec",
+        "board_identification": "rzv2l-evk-platform-settings.bin",
+        "fip": "fip_rzv2l-evk.srec",
+        "flash_writer": "Flash_Writer_SCIF_rzv2l-evk_PMIC.mot",
         "ipl_flash_method": "qspi",
-        "rootfs": "core-image-minimal-rzv2l.wic",
+        "rootfs": "core-image-minimal.wic",
         "rootfs_flash_method": "udp"
     },
     "rzg2l-evk": {
-        "bl2": "bl2_bp-smarc-rzg2l_pmic.srec",
+        "bl2": "bl2_bp_rzg2l-evk.srec",
         "board_identification": "rzg2l-evk-platform-settings.bin",
-        "fip": "fip-smarc-rzg2l_pmic.srec",
-        "flash_writer": "Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot",
+        "fip": "fip_rzg2l-evk.srec",
+        "flash_writer": "Flash_Writer_SCIF_rzg2l-evk_PMIC.mot",
         "ipl_flash_method": "qspi",
-        "rootfs": "core-image-minimal-smarc-rzg2l.rootfs.wic",
+        "rootfs": "core-image-minimal.wic",
         "rootfs_flash_method": "udp"
     },
     "rzg2l-sbc": {
         "bl2": "bl2_bp-rzg2l-sbc.srec",
         "board_identification": "rzg2l-sbc-platform-settings.bin",
-        "fip": "fip-rzg2l-sbc.srec",
+        "fip": "fip_rzg2l-sbc.srec",
         "flash_writer": "Flash_Writer_SCIF_rzg2l-sbc.mot",
         "ipl_flash_method": "qspi",
-        "rootfs": "core-image-qt-rzg2l-sbc.wic",
+        "rootfs": "core-image-minimal.wic",
+        "rootfs_flash_method": "udp"
+    },
+    "rzv2h-evk": {
+        "bl2": "bl2_bp_spi_rzv2h-evk.srec",
+        "board_identification": "rzv2h-evk-platform-settings.srec",
+        "fip": "fip_rzv2h-evk.srec",
+        "flash_writer": "Flash_Writer_SCIF_RZV2H_DEV_INTERNAL_MEMORY.mot",
+        "ipl_flash_method": "qspi",
+        "rootfs": "core-image-minimal.wic",
         "rootfs_flash_method": "udp"
     }
 }
