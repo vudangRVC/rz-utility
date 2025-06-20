@@ -4,20 +4,20 @@
 import serial
 import argparse
 import time
+import os
 from serial.tools.list_ports import comports
+import sys
+if sys.version_info >= (3, 11):  # pragma: Python version >=3.11
+    import tomllib
+else:  # pragma: Python version <3.11
+    import tomli as tomllib
 
 class UloadFlashUtil:
 	def __init__(self, args=None):
+		self.__scriptDir = os.path.dirname(os.path.abspath(__file__))
+
 		self.__setupArgumentParser(args)
 		self.__setupSerialPort()
-
-
-		self.__qspiFlashAddress = {
-			"rzg2l-sbc": ["00000", "1D200", "1C700"],
-			"rzg2l-evk": ["00000", "1D200", "1C700"],
-			"rzv2l-evk": ["00000", "1D200", "1C700"],
-			"rzv2h-evk": ["00000", "60000", "120000"],
-		}
 
 	# Setup CLI parser
 	def __setupArgumentParser(self, args):
@@ -65,13 +65,22 @@ class UloadFlashUtil:
 		except:
 			die(msg='Unable to open serial port.')
 
-	# Function to write bootloader
-	def writeUloadBootloader(self):
-		# Check if board name is supported
-		qspiFlashAddress = self.__qspiFlashAddress[self.__args.boardName]
-		if qspiFlashAddress is None:
+	def __getUloadFlashInfo(self):
+		configFile = os.path.join(self.__scriptDir, ".." , ".config", 'boards_flash_config.toml')
+		with open(configFile, "rb") as f:
+			flash_info = tomllib.load(f)
+
+		self.__uloadFlashInfo = flash_info[self.__args.boardName]
+
+		if self.__uloadFlashInfo is None:
 			print(f"Board name {self.__args.boardName} is not supported.")
 			exit()
+
+	# Function to write bootloader
+	def writeUloadBootloader(self):
+		self.__getUloadFlashInfo()
+		qspiFlashAddress = self.__uloadFlashInfo["flash_address"]
+		loadAddress = self.__uloadFlashInfo["load_address"]
 
 		start_time = time.time()
 
@@ -105,9 +114,9 @@ class UloadFlashUtil:
 
 		# loading bl2...
 		if (self.__args.boardName == "rzv2h-evk"):
-			self.__writeSerialCmd(f'fatload mmc 0:1 0x48000000 uload-bootloader/bl2_bp_spi_{self.__args.boardName}.bin')
+			self.__writeSerialCmd(f'fatload mmc 0:1 {loadAddress} uload-bootloader/bl2_bp_spi_{self.__args.boardName}.bin')
 		else:
-			self.__writeSerialCmd(f'fatload mmc 0:1 0x48000000 uload-bootloader/bl2_bp_{self.__args.boardName}.bin')
+			self.__writeSerialCmd(f'fatload mmc 0:1 {loadAddress} uload-bootloader/bl2_bp_{self.__args.boardName}.bin')
 		self.__serialRead('MiB/s)')
 
 		# true
@@ -115,7 +124,7 @@ class UloadFlashUtil:
 		self.__serialRead('=>')
 
 		# writing bl2...
-		self.__writeSerialCmd(f'sf write 0x48000000 {qspiFlashAddress[0]} $filesize')
+		self.__writeSerialCmd(f'sf write {loadAddress} {qspiFlashAddress[0]} $filesize')
 		self.__serialRead('OK')
 
 		# true
@@ -123,7 +132,7 @@ class UloadFlashUtil:
 		self.__serialRead('=>')
 
 		# loading fip...
-		self.__writeSerialCmd(f'fatload mmc 0:1 0x48000000 uload-bootloader/fip_{self.__args.boardName}.bin')
+		self.__writeSerialCmd(f'fatload mmc 0:1 {loadAddress} uload-bootloader/fip_{self.__args.boardName}.bin')
 		self.__serialRead('MiB/s)')
 
 		# true
@@ -131,7 +140,7 @@ class UloadFlashUtil:
 		self.__serialRead('=>')
 
 		# writing fip...
-		self.__writeSerialCmd(f'sf write 0x48000000 {qspiFlashAddress[1]} $filesize')
+		self.__writeSerialCmd(f'sf write {loadAddress} {qspiFlashAddress[1]} $filesize')
 		self.__serialRead('OK')
 
 		# true
@@ -139,7 +148,7 @@ class UloadFlashUtil:
 		self.__serialRead('=>')
 
 		# loading board indentification...
-		self.__writeSerialCmd(f'fatload mmc 0:1 0x48000000 uload-bootloader/{self.__args.boardName}-platform-settings.bin')
+		self.__writeSerialCmd(f'fatload mmc 0:1 {loadAddress} uload-bootloader/{self.__args.boardName}-platform-settings.bin')
 		self.__serialRead('MiB/s)')
 
 		# true
@@ -147,7 +156,7 @@ class UloadFlashUtil:
 		self.__serialRead('=>')
 
 		# writing bl2...
-		self.__writeSerialCmd(f'sf write 0x48000000 {qspiFlashAddress[2]} $filesize')
+		self.__writeSerialCmd(f'sf write {loadAddress} {qspiFlashAddress[2]} $filesize')
 		self.__serialRead('OK')
 
 		# true

@@ -6,6 +6,11 @@ import argparse
 import time
 import os
 from serial.tools.list_ports import comports
+import sys
+if sys.version_info >= (3, 11):  # pragma: Python version >=3.11
+    import tomllib
+else:  # pragma: Python version <3.11
+    import tomli as tomllib
 
 class BootloaderFlashUtil:
 	def __init__(self, args=[]):
@@ -13,58 +18,8 @@ class BootloaderFlashUtil:
 		self.__rootDir = os.path.abspath(os.path.join(self.__scriptDir, '..', '..', '..'))
 		self.__imagesDir = os.path.abspath(os.path.join(self.__rootDir, 'target', 'images'))
 
-		self.__flashAddress = {
-			"rzg2l-sbc": {
-				"QSPI": {
-					"BL2": ["11E00", "00000"],
-					"FIP": ["00000", "1D200"],
-					"BID": ["00810", "1C700"]
-				},
-				"eMMC": {
-					"BL2": ["1", "1",   "11E00"],
-					"FIP": ["1", "100", "00000", "2",   "8"],
-					"BID": ["1", "200", "1C700", "250", "122"],
-				}
-			},
-			"rzg2l-evk": {
-				"QSPI": {
-					"BL2": ["11E00", "00000"],
-					"FIP": ["00000", "1D200"],
-					"BID": ["00810", "1C700"]
-				},
-				"eMMC": {
-					"BL2": ["1", "1",   "11E00"],
-					"FIP": ["1", "100", "00000", "2",   "8"],
-					"BID": ["1", "200", "1C700", "250", "122"],
-				}
-			},
-			"rzv2l-evk": {
-				"QSPI": {
-					"BL2": ["11E00", "00000"],
-					"FIP": ["00000", "1D200"],
-					"BID": ["00810", "1C700"]
-				},
-				"eMMC": {
-					"BL2": ["1", "1",   "11E00"],
-					"FIP": ["1", "100", "00000", "2",   "8"],
-					"BID": ["1", "200", "1C700", "250", "122"],
-				}
-			},
-			"rzv2h-evk": {
-				"QSPI": {
-					"BL2": ["8101E00", "00000"],
-					"FIP": ["00000", "60000"],
-					"BID": ["00000", "120000"]
-				},
-				"eMMC": {
-					"BL2": ["1", "1",   "8101E00"],
-					"FIP": ["1", "100", "00000", "2",   "8"],
-					"BID": ["1", "200", "120000", "762", "762"],
-				}
-			},
-		}
-
 		self.__setupArgumentParser(args)
+		self.__getFlashAddress()
 		self.__setupSerialPort()
 
 	# Setup CLI parser
@@ -146,6 +101,17 @@ class BootloaderFlashUtil:
 		except:
 			die(msg='Unable to open serial port.')
 
+	def __getFlashAddress(self):
+		configFile = os.path.join(self.__scriptDir, ".." , ".config", 'boards_flash_config.toml')
+		with open(configFile, "rb") as f:
+			flash_info = tomllib.load(f)
+
+		self.__flashAddress = flash_info[self.__args.boardName]
+
+		if self.__flashAddress is None:
+			print(f"Board name {self.__args.boardName} is not supported.")
+			exit()
+
 	# Setup Serial Port SUP
 	def __setupSerialPort_SUP(self):
 		try:
@@ -192,11 +158,6 @@ class BootloaderFlashUtil:
 			print(f"The file {self.__args.bidImage} does not exist.")
 			exit()
 
-		flashAddress = self.__flashAddress[self.__args.boardName]
-		if flashAddress is None:
-			print(f"Board name {self.__args.boardName} is not supported.")
-			exit()
-
 		# Wait for device to be ready to receive image.
 		print("Please power on board. Make sure you changed switches to SCIF download mode.")
 		if (self.__args.boardName == "rzv2h-evk"):
@@ -219,10 +180,10 @@ class BootloaderFlashUtil:
 
 		# emmc flash
 		if (self.__args.flashMethod == "emmc"):
-			self.__handle_emmc_flash(flashAddress["eMMC"])
+			self.__handle_emmc_flash(self.__flashAddress["emmc"])
 		# qspi flash
 		elif (self.__args.flashMethod == "qspi"):
-			self.__handle_qspi_flash(flashAddress["QSPI"])
+			self.__handle_qspi_flash(self.__flashAddress["qspi"])
 
 		print("Closed serial port.")
 		self.__serialPort.close()
