@@ -8,6 +8,9 @@ Scripts for flashing RZ images, compatible with both Windows and Linux OS.
 universal_scripts
 ├── host
 │   └── tools
+│       ├── config
+│       │   ├── boards_flash_config.toml
+│       │   └── README.md
 │       ├── bootloader-flasher
 │       │   ├── bootloader_flash.py
 │       │   └── README.md
