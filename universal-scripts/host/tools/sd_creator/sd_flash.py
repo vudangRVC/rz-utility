@@ -9,19 +9,18 @@ import subprocess
 from subprocess import Popen, PIPE, CalledProcessError
 import platform
 from serial.tools.list_ports import comports
+import json
+import sys
+if sys.version_info >= (3, 11):  # pragma: Python version >=3.11
+    import tomllib
+else:  # pragma: Python version <3.11
+    import tomli as tomllib
 
 class SdFlashUtil:
 	def __init__(self, args=None):
 		self.__scriptDir = os.path.dirname(os.path.abspath(__file__))
 		self.__rootDir = os.path.abspath(os.path.join(self.__scriptDir, '..', '..', '..'))
 		self.__imagesDir = os.path.abspath(os.path.join(self.__rootDir, 'target', 'images'))
-
-		self.__etherAddress = {
-			"rzg2l-sbc": ["11c20000", "11c30000"],
-			"rzg2l-evk": ["11c20000", "11c30000"],
-			"rzv2l-evk": ["11c20000", "11c30000"],
-			"rzv2h-evk": ["15c30000", "15c40000"],
-		}
 
 		if platform.system() == "Windows":
 			self.__fastboot = os.path.abspath(os.path.join(self.__scriptDir, 'tools', 'fastboot.exe'))
@@ -106,6 +105,17 @@ class SdFlashUtil:
 		except:
 			die(msg='Unable to open serial port.')
 
+	def __getEtherAddress(self):
+		configFile = os.path.join(self.__scriptDir, ".." , ".config", 'boards_flash_config.toml')
+		with open(configFile, "rb") as f:
+			eth_info = tomllib.load(f)
+
+		self.__etherAddress = eth_info[self.__args.boardName]["ethernet"]
+
+		if self.__etherAddress is None:
+			print(f"Board name {self.__args.boardName} is not supported.")
+			exit()
+
 	def __listDevice(self):
 		command_dev = 'fastboot devices'
 		print (command_dev)
@@ -145,14 +155,11 @@ class SdFlashUtil:
 		print(f"Elapsed time: {elapsed_time:.6f} seconds")
 
 	def __handle_udp_fastboot(self):
-		etherAddress = self.__etherAddress[self.__args.boardName]
-		if etherAddress is None:
-			print(f"Board name {self.__args.boardName} is not supported.")
-			exit()
+		self.__getEtherAddress()
 
 		print('fastboot udp mode')
 		self.__writeSerialCmd('setenv ipaddr ' + self.__args.ipAddress)
-		self.__writeSerialCmd(f'setenv ethact ethernet@{etherAddress[self.__args.etherPort]}')
+		self.__writeSerialCmd(f'setenv ethact ethernet@{self.__etherAddress[self.__args.etherPort]}')
 		self.__writeSerialCmd('fastboot udp')
 		self.__serialRead('Listening for fastboot command on')
 
