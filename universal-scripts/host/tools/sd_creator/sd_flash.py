@@ -106,7 +106,7 @@ class SdFlashUtil:
 			die(msg='Unable to open serial port.')
 
 	def __getEtherAddress(self):
-		configFile = os.path.join(self.__scriptDir, ".." , ".config", 'boards_flash_config.toml')
+		configFile = os.path.join(self.__scriptDir, ".." , "config", 'boards_flash_config.toml')
 		with open(configFile, "rb") as f:
 			eth_info = tomllib.load(f)
 
