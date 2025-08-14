@@ -5,7 +5,7 @@ ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
 ATF_BRANCH_RZPI="styhead/rz-cmn-fconf"
 ATF_BRANCH_V2L="styhead/rz-cmn-fconf"
 ATF_BRANCH_G2L="styhead/rz-cmn-fconf"
-ATF_BRANCH_G2L100="atf-pass-params-g2l"
+ATF_BRANCH_G2L100="styhead/rz-cmn-fconf"
 ATF_BRANCH_V2H="styhead/rz-cmn-fconf"
 
 getcode_atf()

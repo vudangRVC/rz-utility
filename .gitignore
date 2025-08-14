@@ -1,0 +1,13 @@
+uboot/
+trusted-firmware-a/
+flash_writer/
+bootparameter_dir/
+Flash_Writer_SCIF_RZG2L_15MMSQ_DEV_DDR4_4GB.mot
+bl2_bp.bin
+bl2_bp_g2l100.srec
+bootparameter
+fip.bin
+fip_g2l100.srec
+fiptool
+tools/binmake/build/
+RZG2L-100.srec

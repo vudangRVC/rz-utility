@@ -7,7 +7,7 @@ UBOOT_GIT_URL="git@github.com:vudangRVC/u-boot-sst.git"
 UBOOT_BRANCH_RZPI="styhead/rz-sbc"
 UBOOT_BRANCH_V2L="styhead/rz-sbc"
 UBOOT_BRANCH_G2L="styhead/rz-sbc"
-UBOOT_BRANCH_G2L100="atf-pass-params-g2l"
+UBOOT_BRANCH_G2L100="styhead/rz-sbc"
 UBOOT_BRANCH_V2H="v2021.10/rzv2h"
 
 getcode_u-boot()
@@ -51,7 +51,7 @@ mk_u-boot()
     elif [ "${BOARD}" == "g2l" ] ; then
         make -j12 smarc-rzg2l_defconfig
     elif [ "${BOARD}" == "g2l100" ] ; then
-        make -j12 rz-multi-boards_defconfig
+        make -j12 smarc-rzg2l_defconfig
     else
         echo "Error: Unsupported BOARD type: ${BOARD}"
         exit 1
