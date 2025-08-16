@@ -22,17 +22,17 @@ set_toolchain() {
 validate_board() {
     BOARD=$1
     case "${BOARD}" in
-        v2h|v2l|g2lsbc|g2l|g2l100)
+        v2h-evk|v2l-evk|g2l-sbc|g2l-evk|g2l-100)
             return 0
             ;;
         *)
             echo "BOARD is not supported"
-            echo "Please use one of: v2h, g2lsbc, v2l, g2l, g2l100"
-            echo "Example: ./all_build.sh v2h"
-            echo "Example: ./all_build.sh g2lsbc"
-            echo "Example: ./all_build.sh v2l"
-            echo "Example: ./all_build.sh g2l"
-            echo "Example: ./all_build.sh g2l100"
+            echo "Please use one of: v2h-evk, g2l-sbc, v2l-evk, g2l-evk, g2l-100"
+            echo "Example: ./all_build.sh v2h-evk"
+            echo "Example: ./all_build.sh g2l-sbc"
+            echo "Example: ./all_build.sh v2l-evk"
+            echo "Example: ./all_build.sh g2l-evk"
+            echo "Example: ./all_build.sh g2l-100"
             exit 1
             ;;
     esac
