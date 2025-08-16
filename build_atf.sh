@@ -47,7 +47,7 @@ mk_atf()
         make -j12 PLAT=g2l BOARD=smarc_pmic_2 bl2_with_dtb bl31
     elif [ "${BOARD}" == "g2l-100" ] ; then
         echo "build atf for g2l-100"
-        make -j12 PLAT=g2l BOARD=rzg2l_100 bl2_with_dtb bl31
+        make -j12 PLAT=g2l BOARD=smarc_pmic_2 bl2_with_dtb bl31
     elif [ "${BOARD}" == "v2h-evk" ] ; then
         echo "build atf for v2h-evk"
         make -j12 PLAT=v2h BOARD=v2h_evk_1 ENABLE_STACK_PROTECTOR=default bl2_with_dtb bl31

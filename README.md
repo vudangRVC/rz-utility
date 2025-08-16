@@ -98,8 +98,8 @@ Use `write_ipl.sh` to flash IPL over UART.
 ./write_ipl.sh \
   --serial_port /dev/ttyUSB0 \
   --image_writer Flash_Writer_SCIF_RZG2L_15MMSQ_DEV_DDR4_4GB.mot \
-  --image_bl2 bl2_bp_g2l100.srec \
-  --image_fip fip_g2l100.srec
+  --image_bl2 bl2_bp_g2l-100.srec \
+  --image_fip fip_g2l-100.srec
 ```
 
 ### RZ/V2H - Burn to SD card

@@ -1,4 +1,5 @@
 #!/bin/bash
+source ./common.sh
 
 WORKPWD=$(pwd)
 build_board_id()
@@ -41,28 +42,9 @@ build_board_id()
     cp ${MODEL}.srec ${WORKPWD}
 }
 
-validate_board_id() {
-    BOARD=$1
-    case "${BOARD}" in
-        v2h-evk|v2l-evk|g2l-sbc|g2l-evk|g2l-100)
-            return 0
-            ;;
-        *)
-            echo "BOARD is not supported"
-            echo "Please use one of: v2h-evk, v2l-evk, g2l-evk, g2l-sbc, g2l-100"
-            echo "Example: ./all_build.sh v2h-evk"
-            echo "Example: ./all_build.sh v2l-evk"
-            echo "Example: ./all_build.sh g2l-evk"
-            echo "Example: ./all_build.sh g2l-sbc"
-            echo "Example: ./all_build.sh g2l-100"
-            exit 1
-            ;;
-    esac
-}
-
 function main_process(){
     BOARD=$1
-    validate_board_id "${BOARD}"
+    validate_board "${BOARD}"
     build_board_id $BOARD
 }
 

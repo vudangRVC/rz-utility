@@ -41,11 +41,11 @@ mk_bootimage()
     cd ${WORKPWD}
     BUILDMODE=release
 
-    if [ "${BOARD}" == "v2h" ]; then
+    if [ "${BOARD}" == "v2h-evk" ]; then
         SOC="v2h"
-    elif [ "${BOARD}" == "v2l" ]; then
+    elif [ "${BOARD}" == "v2l-evk" ]; then
         SOC="v2l"
-    elif [ "${BOARD}" == "rzpi" ] || [ "${BOARD}" == "g2l" ] || [ "${BOARD}" == "g2l100" ]; then
+    elif [ "${BOARD}" == "g2l-evk" ] || [ "${BOARD}" == "g2l-sbc" ] || [ "${BOARD}" == "g2l-100" ]; then
         SOC="g2l"
     else
         echo "Unsupported board: ${BOARD}"
@@ -85,10 +85,11 @@ function main_process(){
 }
 
 #--start--------
-# ./merge_ipl_file.sh v2l
-# ./merge_ipl_file.sh rzpi
-# ./merge_ipl_file.sh g2l
-# ./merge_ipl_file.sh g2l100
+# ./merge_ipl_file.sh v2h-evk
+# ./merge_ipl_file.sh v2l-evk
+# ./merge_ipl_file.sh g2l-evk
+# ./merge_ipl_file.sh g2l-sbc
+# ./merge_ipl_file.sh g2l-100
 main_process $*
 exit
 #---- end ------
