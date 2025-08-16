@@ -1,8 +1,8 @@
 #!/bin/bash
 source ./common.sh
 
-FWT_GIT_URL="git@github.com:vudangRVC/flash-writer-sst.git"
-FWT_BRANCH_MULTIBOARD="rz-support-multi-boards"
+FWT_GIT_URL="git@github.com:Renesas-SST/flash-writer.git"
+FWT_BRANCH_MULTIBOARD="styhead/rz-cmn"
 
 getcode_flash-writer()
 {
@@ -26,9 +26,9 @@ mk_flash-writer()
     if [ "${BOARD}" == "v2l" ] ; then
         make BOARD=RZV2L_SMARC_PMIC -j12
         cp AArch64_output/Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot ${WORKPWD}
-    elif [ "${BOARD}" == "rzpi" ] ; then
+    elif [ "${BOARD}" == "g2lsbc" ] ; then
         make BOARD=RZG2L_SBC -j12
-        cp AArch64_output/Flash_Writer_SCIF_RZG2L_SBC_DDR4_900MB_1PCS.mot ${WORKPWD}/Flash_Writer_SCIF_rzpi.mot
+        cp AArch64_output/Flash_Writer_SCIF_RZG2L_SBC_DDR4_1GB.mot ${WORKPWD}/Flash_Writer_SCIF_rzg2l-sbc.mot
     elif [ "${BOARD}" == "g2l" ] ; then
         make BOARD=RZG2L_SMARC_PMIC -j12
         cp AArch64_output/Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot ${WORKPWD}
@@ -53,7 +53,7 @@ function main_process(){
 # call function
 # ./build_flash_writer.sh v2h
 # ./build_flash_writer.sh v2l
-# ./build_flash_writer.sh rzpi
+# ./build_flash_writer.sh g2lsbc
 # ./build_flash_writer.sh g2l
 # ./build_flash_writer.sh g2l100
 main_process $1
