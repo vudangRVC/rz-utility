@@ -23,16 +23,16 @@ mk_flash-writer()
     rm *.mot
     cd ${WORKPWD}/${FWT_DIR}/
     make clean
-    if [ "${BOARD}" == "v2l" ] ; then
+    if [ "${BOARD}" == "v2l-evk" ] ; then
         make BOARD=RZV2L_SMARC_PMIC -j12
         cp AArch64_output/Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot ${WORKPWD}
-    elif [ "${BOARD}" == "g2lsbc" ] ; then
+    elif [ "${BOARD}" == "g2l-sbc" ] ; then
         make BOARD=RZG2L_SBC -j12
         cp AArch64_output/Flash_Writer_SCIF_RZG2L_SBC_DDR4_1GB.mot ${WORKPWD}/Flash_Writer_SCIF_rzg2l-sbc.mot
-    elif [ "${BOARD}" == "g2l" ] ; then
+    elif [ "${BOARD}" == "g2l-evk" ] ; then
         make BOARD=RZG2L_SMARC_PMIC -j12
         cp AArch64_output/Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot ${WORKPWD}
-    elif [ "${BOARD}" == "g2l100" ] ; then
+    elif [ "${BOARD}" == "g2l-100" ] ; then
         make BOARD=RZG2L_15MMSQ_DEV -j12
         cp AArch64_output/Flash_Writer_SCIF_RZG2L_15MMSQ_DEV_DDR4_4GB.mot ${WORKPWD}
     else
@@ -51,9 +51,9 @@ function main_process(){
 }
 
 # call function
-# ./build_flash_writer.sh v2h
-# ./build_flash_writer.sh v2l
-# ./build_flash_writer.sh g2lsbc
-# ./build_flash_writer.sh g2l
-# ./build_flash_writer.sh g2l100
+# ./build_flash_writer.sh v2h-evk
+# ./build_flash_writer.sh v2l-evk
+# ./build_flash_writer.sh g2l-sbc
+# ./build_flash_writer.sh g2l-evk
+# ./build_flash_writer.sh g2l-100
 main_process $1
