@@ -49,11 +49,11 @@ validate_board_id() {
             ;;
         *)
             echo "BOARD is not supported"
-            echo "Please use one of: v2h-evk, g2l-sbc, v2l-evk, g2l-evk, g2l-100"
+            echo "Please use one of: v2h-evk, v2l-evk, g2l-evk, g2l-sbc, g2l-100"
             echo "Example: ./all_build.sh v2h-evk"
-            echo "Example: ./all_build.sh g2l-sbc"
             echo "Example: ./all_build.sh v2l-evk"
             echo "Example: ./all_build.sh g2l-evk"
+            echo "Example: ./all_build.sh g2l-sbc"
             echo "Example: ./all_build.sh g2l-100"
             exit 1
             ;;

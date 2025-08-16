@@ -27,7 +27,7 @@ function main_process(){
     ./build_u-boot.sh $BOARD
 
     # Merge the u-boot and atf
-    if [ "${BOARD}" == "v2h" ] ; then
+    if [ "${BOARD}" == "v2h-evk" ] ; then
         ./v2h_merge_ipl_file.sh $BOARD
     else
         ./build_flash_writer.sh $BOARD
@@ -36,11 +36,11 @@ function main_process(){
 }
 
 #--start--------
-# ./all_build.sh v2h
-# ./all_build.sh v2l
-# ./all_build.sh rzpi
-# ./all_build.sh g2l
-# ./all_build.sh g2l100
+# ./all_build.sh v2h-evk
+# ./all_build.sh v2l-evk
+# ./all_build.sh g2l-sbc
+# ./all_build.sh g2l-evk
+# ./all_build.sh g2l-100
 main_process $*
 
 exit

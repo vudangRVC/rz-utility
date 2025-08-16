@@ -11,3 +11,8 @@ fip_g2l100.srec
 fiptool
 tools/binmake/build/
 RZG2L-100.srec
+trusted-firmware-a_bk/
+.vscode/
+*.mot
+*.srec
+*.json

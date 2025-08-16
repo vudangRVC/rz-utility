@@ -1,9 +1,6 @@
 #!/bin/bash
 source ./common.sh
 
-FWT_GIT_URL="git@github.com:Renesas-SST/flash-writer.git"
-FWT_BRANCH_MULTIBOARD="styhead/rz-cmn"
-
 getcode_flash-writer()
 {
     cd ${WORKPWD}/

@@ -1,13 +1,6 @@
 #!/bin/bash
 source ./common.sh
 
-ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
-ATF_BRANCH_G2L_SBC="styhead/rz-cmn-fconf"
-ATF_BRANCH_V2L_EVK="styhead/rz-cmn-fconf"
-ATF_BRANCH_G2L_EVK="styhead/rz-cmn-fconf"
-ATF_BRANCH_G2L_100="styhead/rz-cmn-fconf"
-ATF_BRANCH_V2H_EVK="styhead/rz-cmn-fconf"
-
 getcode_atf()
 {
     BOARD=$1

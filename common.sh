@@ -1,9 +1,19 @@
 #!/bin/bash
-
 WORKPWD=$(pwd)
-FWT_DIR="flash_writer"
-ATF_DIR="trusted-firmware-a"
 
+# flash writer variables
+FWT_DIR="flash_writer"
+FWT_GIT_URL="git@github.com:Renesas-SST/flash-writer.git"
+FWT_BRANCH_MULTIBOARD="styhead/rz-cmn"
+
+# ATF variables
+ATF_DIR="trusted-firmware-a"
+ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
+ATF_BRANCH_G2L_SBC="styhead/rz-cmn-fconf"
+ATF_BRANCH_V2L_EVK="styhead/rz-cmn-fconf"
+ATF_BRANCH_G2L_EVK="styhead/rz-cmn-fconf"
+ATF_BRANCH_G2L_100="styhead/rz-cmn-fconf"
+ATF_BRANCH_V2H_EVK="styhead/rz-cmn-fconf"
 
 # u-boot variables
 UBOOT_DIR="uboot"
@@ -14,7 +24,7 @@ UBOOT_BRANCH_G2L_EVK="styhead/rz-cmn"
 UBOOT_BRANCH_G2L_100="styhead/rz-cmn"
 UBOOT_BRANCH_V2H_EVK="v2021.10/rzv2h"
 
-
+# boot parameter variables
 BOOTPARAMETER_DIR="bootparameter_dir"
 
 set_toolchain() {
@@ -38,11 +48,11 @@ validate_board() {
             ;;
         *)
             echo "BOARD is not supported"
-            echo "Please use one of: v2h-evk, g2l-sbc, v2l-evk, g2l-evk, g2l-100"
+            echo "Please use one of: v2h-evk, v2l-evk, g2l-evk, g2l-sbc, g2l-100"
             echo "Example: ./all_build.sh v2h-evk"
-            echo "Example: ./all_build.sh g2l-sbc"
             echo "Example: ./all_build.sh v2l-evk"
             echo "Example: ./all_build.sh g2l-evk"
+            echo "Example: ./all_build.sh g2l-sbc"
             echo "Example: ./all_build.sh g2l-100"
             exit 1
             ;;

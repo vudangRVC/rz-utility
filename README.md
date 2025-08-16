@@ -67,7 +67,7 @@ Use `write_ipl.sh` to flash IPL over UART.
 ```bash
 ./write_ipl.sh \
   --serial_port /dev/ttyUSB0 \
-  --image_writer Flash_Writer_SCIF_rzpi.mot \
+  --image_writer Flash_Writer_SCIF_rzg2l-sbc.mot \
   --image_bl2 bl2_bp_rzpi.srec \
   --image_fip fip_rzpi.srec
 ```
