@@ -3,7 +3,18 @@
 WORKPWD=$(pwd)
 FWT_DIR="flash_writer"
 ATF_DIR="trusted-firmware-a"
+
+
+# u-boot variables
 UBOOT_DIR="uboot"
+UBOOT_GIT_URL="git@github.com:Renesas-SST/u-boot.git"
+UBOOT_BRANCH_G2L_SBC="styhead/rz-cmn"
+UBOOT_BRANCH_V2L_EVK="styhead/rz-cmn"
+UBOOT_BRANCH_G2L_EVK="styhead/rz-cmn"
+UBOOT_BRANCH_G2L_100="styhead/rz-cmn"
+UBOOT_BRANCH_V2H_EVK="v2021.10/rzv2h"
+
+
 BOOTPARAMETER_DIR="bootparameter_dir"
 
 set_toolchain() {

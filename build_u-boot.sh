@@ -2,14 +2,6 @@
 
 source ./common.sh
 
-UBOOT_GIT_URL="git@github.com:vudangRVC/u-boot-sst.git"
-
-UBOOT_BRANCH_RZPI="styhead/rz-sbc"
-UBOOT_BRANCH_V2L="styhead/rz-sbc"
-UBOOT_BRANCH_G2L="styhead/rz-sbc"
-UBOOT_BRANCH_G2L100="styhead/rz-sbc"
-UBOOT_BRANCH_V2H="v2021.10/rzv2h"
-
 getcode_u-boot()
 {
     cd ${WORKPWD}/
@@ -19,16 +11,16 @@ getcode_u-boot()
     fi
 
     cd ${WORKPWD}/${UBOOT_DIR}
-    if [ "${BOARD}" == "v2l" ] ; then
-        git checkout ${UBOOT_BRANCH_V2L}
-    elif [ "${BOARD}" == "rzpi" ] ; then
-        git checkout ${UBOOT_BRANCH_RZPI}
-    elif [ "${BOARD}" == "g2l" ] ; then
-        git checkout ${UBOOT_BRANCH_G2L}
-    elif [ "${BOARD}" == "g2l100" ] ; then
-        git checkout ${UBOOT_BRANCH_G2L100}
-    elif [ "${BOARD}" == "v2h" ] ; then
-        git checkout ${UBOOT_BRANCH_V2H}
+    if [ "${BOARD}" == "v2l-evk" ] ; then
+        git checkout ${UBOOT_BRANCH_V2L_EVK}
+    elif [ "${BOARD}" == "g2l-sbc" ] ; then
+        git checkout ${UBOOT_BRANCH_G2L_SBC}
+    elif [ "${BOARD}" == "g2l-evk" ] ; then
+        git checkout ${UBOOT_BRANCH_G2L_EVK}
+    elif [ "${BOARD}" == "g2l-100" ] ; then
+        git checkout ${UBOOT_BRANCH_G2L_100}
+    elif [ "${BOARD}" == "v2h-evk" ] ; then
+        git checkout ${UBOOT_BRANCH_V2H_EVK}
     else
         echo "Error: Unsupported BOARD type: ${BOARD}"
         exit 1
@@ -42,16 +34,16 @@ mk_u-boot()
     unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
     make clean
     make distclean
-    if [ "${BOARD}" == "v2h" ] ; then
+    if [ "${BOARD}" == "v2h-evk" ] ; then
         make -j12 rzv2h-evk-ver1_defconfig
-    elif [ "${BOARD}" == "rzpi" ] ; then
-        make -j12 rzpi_defconfig
-    elif [ "${BOARD}" == "v2l" ] ; then
-        make -j12 smarc-rzv2l_defconfig
-    elif [ "${BOARD}" == "g2l" ] ; then
-        make -j12 smarc-rzg2l_defconfig
-    elif [ "${BOARD}" == "g2l100" ] ; then
-        make -j12 smarc-rzg2l_defconfig
+    elif [ "${BOARD}" == "g2l-sbc" ] ; then
+        make -j12 rz-cmn_defconfig
+    elif [ "${BOARD}" == "v2l-evk" ] ; then
+        make -j12 rz-cmn_defconfig
+    elif [ "${BOARD}" == "g2l-evk" ] ; then
+        make -j12 rz-cmn_defconfig
+    elif [ "${BOARD}" == "g2l-100" ] ; then
+        make -j12 rz-cmn_defconfig
     else
         echo "Error: Unsupported BOARD type: ${BOARD}"
         exit 1
@@ -69,11 +61,11 @@ function main_process(){
 }
 
 #--start--------
-# ./build_u-boot.sh v2h
-# ./build_u-boot.sh v2l
-# ./build_u-boot.sh rzpi
-# ./build_u-boot.sh g2l
-# ./build_u-boot.sh g2l100
+# ./build_u-boot.sh v2h-evk
+# ./build_u-boot.sh v2l-evk
+# ./build_u-boot.sh g2l-sbc
+# ./build_u-boot.sh g2l-evk
+# ./build_u-boot.sh g2l-100
 main_process $*
 
 exit
