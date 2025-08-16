@@ -2,11 +2,11 @@
 source ./common.sh
 
 ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
-ATF_BRANCH_RZPI="styhead/rz-cmn-fconf"
-ATF_BRANCH_V2L="styhead/rz-cmn-fconf"
-ATF_BRANCH_G2L="styhead/rz-cmn-fconf"
-ATF_BRANCH_G2L100="styhead/rz-cmn-fconf"
-ATF_BRANCH_V2H="styhead/rz-cmn-fconf"
+ATF_BRANCH_G2L_SBC="styhead/rz-cmn-fconf"
+ATF_BRANCH_V2L_EVK="styhead/rz-cmn-fconf"
+ATF_BRANCH_G2L_EVK="styhead/rz-cmn-fconf"
+ATF_BRANCH_G2L_100="styhead/rz-cmn-fconf"
+ATF_BRANCH_V2H_EVK="styhead/rz-cmn-fconf"
 
 getcode_atf()
 {
@@ -19,16 +19,16 @@ getcode_atf()
     fi
 
     cd ${WORKPWD}/${ATF_DIR}
-    if [ "${BOARD}" == "v2l" ] ; then
-        git checkout ${ATF_BRANCH_V2L}
-    elif [ "${BOARD}" == "rzpi" ] ; then
-        git checkout ${ATF_BRANCH_RZPI}
-    elif [ "${BOARD}" == "g2l" ] ; then
-        git checkout ${ATF_BRANCH_G2L}
-    elif [ "${BOARD}" == "g2l100" ] ; then
-        git checkout ${ATF_BRANCH_G2L100}
-    elif [ "${BOARD}" == "v2h" ] ; then
-        git checkout ${ATF_BRANCH_V2H}
+    if [ "${BOARD}" == "v2l-evk" ] ; then
+        git checkout ${ATF_BRANCH_V2L_EVK}
+    elif [ "${BOARD}" == "g2l-sbc" ] ; then
+        git checkout ${ATF_BRANCH_G2L_SBC}
+    elif [ "${BOARD}" == "g2l-evk" ] ; then
+        git checkout ${ATF_BRANCH_G2L_EVK}
+    elif [ "${BOARD}" == "g2l-100" ] ; then
+        git checkout ${ATF_BRANCH_G2L_100}
+    elif [ "${BOARD}" == "v2h-evk" ] ; then
+        git checkout ${ATF_BRANCH_V2H_EVK}
     else
         echo "Error: Unsupported BOARD type: ${BOARD}"
         exit 1
@@ -43,20 +43,20 @@ mk_atf()
     make clean
     make distclean
 
-    if [ "${BOARD}" == "v2l" ] ; then
-        echo "build atf for rzv2l"
+    if [ "${BOARD}" == "v2l-evk" ] ; then
+        echo "build atf for v2l-evk"
         make -j12 PLAT=v2l BOARD=smarc_rzv2l bl2_with_dtb bl31
-    elif [ "${BOARD}" == "rzpi" ] ; then
-        echo "build atf for rzpi"
+    elif [ "${BOARD}" == "g2l-sbc" ] ; then
+        echo "build atf for g2l-sbc"
         make -j12 PLAT=g2l BOARD=sbc_1 bl2_with_dtb bl31
-    elif [ "${BOARD}" == "g2l" ] ; then
-        echo "build atf for g2l"
+    elif [ "${BOARD}" == "g2l-evk" ] ; then
+        echo "build atf for g2l-evk"
         make -j12 PLAT=g2l BOARD=smarc_pmic_2 bl2_with_dtb bl31
-    elif [ "${BOARD}" == "g2l100" ] ; then
-        echo "build atf for g2l100"
-        make -j12 PLAT=g2l BOARD=smarc_pmic_2 bl2 bl31
-    elif [ "${BOARD}" == "v2h" ] ; then
-        echo "build atf for v2h"
+    elif [ "${BOARD}" == "g2l-100" ] ; then
+        echo "build atf for g2l-100"
+        make -j12 PLAT=g2l BOARD=rzg2l_100 bl2_with_dtb bl31
+    elif [ "${BOARD}" == "v2h-evk" ] ; then
+        echo "build atf for v2h-evk"
         make -j12 PLAT=v2h BOARD=v2h_evk_1 ENABLE_STACK_PROTECTOR=default bl2_with_dtb bl31
     else
         echo "Error: Unsupported BOARD type: ${BOARD}"
@@ -75,11 +75,11 @@ function main_process(){
 }
 
 #--start--------
-# ./build_atf.sh v2h
-# ./build_atf.sh v2l
-# ./build_atf.sh rzpi
-# ./build_atf.sh g2l
-# ./build_atf.sh g2l100
+# ./build_atf.sh v2h-evk
+# ./build_atf.sh v2l-evk
+# ./build_atf.sh g2l-sbc
+# ./build_atf.sh g2l-evk
+# ./build_atf.sh g2l-100
 main_process $*
 
 exit
