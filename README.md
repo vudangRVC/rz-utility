@@ -68,8 +68,8 @@ Use `write_ipl.sh` to flash IPL over UART.
 ./write_ipl.sh \
   --serial_port /dev/ttyUSB0 \
   --image_writer Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot \
-  --image_bl2 bl2_bp_v2l.srec \
-  --image_fip fip_v2l.srec \
+  --image_bl2 bl2_bp_v2l-evk.srec \
+  --image_fip fip_v2l-evk.srec \
   --image_boardID v2l-evk-platform-settings.srec
 ```
 
@@ -90,8 +90,8 @@ sudo sync /dev/sdX
 ./write_ipl.sh \
   --serial_port /dev/ttyUSB0 \
   --image_writer Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot \
-  --image_bl2 bl2_bp_g2l.srec \
-  --image_fip fip_g2l.srec \
+  --image_bl2 bl2_bp_g2l-evk.srec \
+  --image_fip fip_g2l-evk.srec \
   --image_boardID g2l-evk-platform-settings.srec
 ```
 
@@ -101,8 +101,8 @@ sudo sync /dev/sdX
 ./write_ipl.sh \
   --serial_port /dev/ttyUSB0 \
   --image_writer Flash_Writer_SCIF_rzg2l-sbc.mot \
-  --image_bl2 bl2_bp_rzpi.srec \
-  --image_fip fip_rzpi.srec \
+  --image_bl2 bl2_bp_g2l-sbc.srec \
+  --image_fip fip_g2l-sbc.srec \
   --image_boardID g2l-sbc-platform-settings.srec
 ```
 
