@@ -34,9 +34,10 @@ class FlashUtil:
 		self.__parser.add_argument('--serial_port_baud', default=115200, dest='baudRate', action='store', type=int, help='Baud rate for serial port (defaults to: 115200).')
 
 		# Images
-		self.__parser.add_argument('--image_writer', default=f'{self.__imagesDir}/Flash_Writer_SCIF_rzg2l-sbc.mot', dest='flashWriterImage', action='store', type=str, help="Path to Flash Writer image (defaults to: Flash_Writer_SCIF_rzg2l-sbc.mot).")
-		self.__parser.add_argument('--image_bl2', default=f'{self.__imagesDir}/bl2_bp_rzpi.srec', dest='bl2Image', action='store', type=str, help='Path to bl2 image (defaults to: bl2_bp_rzpi.srec).')
-		self.__parser.add_argument('--image_fip', default=f'{self.__imagesDir}/fip_rzpi.srec', dest='fipImage', action='store', type=str, help='Path to FIP image (defaults to: fip_rzpi.srec).')
+		self.__parser.add_argument('--image_writer', default=f'{self.__imagesDir}/Flash_Writer_SCIF_RZG2L_15MMSQ_DEV_DDR4_4GB.mot', dest='flashWriterImage', action='store', type=str, help="Path to Flash Writer image (defaults to: Flash_Writer_SCIF_RZG2L_15MMSQ_DEV_DDR4_4GB.mot).")
+		self.__parser.add_argument('--image_bl2', default=f'{self.__imagesDir}/bl2_bp_g2l-100.srec', dest='bl2Image', action='store', type=str, help='Path to bl2 image (defaults to: bl2_bp_g2l-100.srec).')
+		self.__parser.add_argument('--image_fip', default=f'{self.__imagesDir}/fip_g2l-100.srec', dest='fipImage', action='store', type=str, help='Path to FIP image (defaults to: fip_g2l-100.srec).')
+		self.__parser.add_argument('--image_boardID', default=f'{self.__imagesDir}/g2l-100-platform-settings.srec', dest='boardIDImage', action='store', type=str, help='Path to FIP image (defaults to: g2l-100-platform-settings.srec).')
 
 		self.__args = self.__parser.parse_args()
 
@@ -67,6 +68,9 @@ class FlashUtil:
 			exit()
 		if not os.path.exists(self.__args.fipImage):
 			print(f"The file {self.__args.fipImage} does not exist.")
+			exit()
+		if not os.path.exists(self.__args.boardIDImage):
+			print(f"The file {self.__args.boardIDImage} does not exist.")
 			exit()
 
 		# Wait for device to be ready to receive image.
@@ -212,6 +216,44 @@ class FlashUtil:
 			exit()
 		print(f'{buf.decode()}')
 
+		# Write platform settings board ID
+		self.__serialPort.write('XLS2\r'.encode())
+		buf = self.__serialPort.read_until('Please Input : H'.encode())
+		if not buf:
+			print("Returned value is not the expectation. Exiting.")
+			exit()
+		print(f'{buf.decode()}')
+
+		self.__serialPort.write('00000\r'.encode())
+		buf = self.__serialPort.read_until('Please Input : H'.encode())
+		if not buf:
+			print("Returned value is not the expectation. Exiting.")
+			exit()
+		print(f'{buf.decode()}')
+
+		self.__serialPort.write('1C700\r'.encode())
+		buf = self.__serialPort.read_until('please send !'.encode())
+		if not buf:
+			print("Returned value is not the expectation. Exiting.")
+			exit()
+		print(f'{buf.decode()}')
+
+		print("Writing board_ID ...")
+		self.__writeFileToSerial(self.__args.boardIDImage)
+		buf = self.__serialPort.read_until('Clear OK'.encode())
+		if not buf:
+			print("Returned value is not the expectation. Exiting.")
+			exit()
+		print(f'{buf.decode()}')
+
+		self.__serialPort.write('\ry\r'.encode())
+		buf = self.__serialPort.read_until('>'.encode())
+		if not buf:
+			print("Returned value is not the expectation. Exiting.")
+			exit()
+		print(f'{buf.decode()}')
+
+		# Close serial port
 		print("Closed serial port.")
 		self.__serialPort.close()
 

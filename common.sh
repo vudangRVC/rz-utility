@@ -8,21 +8,22 @@ FWT_BRANCH_MULTIBOARD="styhead/rz-cmn"
 
 # ATF variables
 ATF_DIR="trusted-firmware-a"
-ATF_GIT_URL="git@github.com:vudangRVC/rz-atf-sst.git"
-ATF_BRANCH_G2L_SBC="styhead/rz-cmn-fconf"
-ATF_BRANCH_V2L_EVK="styhead/rz-cmn-fconf"
-ATF_BRANCH_G2L_EVK="styhead/rz-cmn-fconf"
-ATF_BRANCH_G2L_100="styhead/rz-cmn-fconf"
-ATF_BRANCH_V2H_EVK="styhead/rz-cmn-fconf"
+ATF_GIT_URL="git@github.com/Renesas-SST/rz-atf.git"
+ATF_BRANCH_V2L_EVK="styhead/rz-cmn"
+ATF_BRANCH_V2H_EVK="styhead/rz-cmn"
+ATF_BRANCH_G2L_EVK="styhead/rz-cmn"
+ATF_BRANCH_G2L_SBC="styhead/rz-cmn"
+ATF_BRANCH_G2L_100="styhead/rz-cmn"
 
 # u-boot variables
 UBOOT_DIR="uboot"
 UBOOT_GIT_URL="git@github.com:Renesas-SST/u-boot.git"
-UBOOT_BRANCH_G2L_SBC="styhead/rz-cmn"
 UBOOT_BRANCH_V2L_EVK="styhead/rz-cmn"
-UBOOT_BRANCH_G2L_EVK="styhead/rz-cmn"
-UBOOT_BRANCH_G2L_100="styhead/rz-cmn"
 UBOOT_BRANCH_V2H_EVK="v2021.10/rzv2h"
+UBOOT_BRANCH_G2L_EVK="styhead/rz-cmn"
+UBOOT_BRANCH_G2L_SBC="styhead/rz-cmn"
+UBOOT_BRANCH_G2L_100="styhead/rz-cmn"
+
 
 # boot parameter variables
 BOOTPARAMETER_DIR="bootparameter_dir"
@@ -43,14 +44,14 @@ set_toolchain() {
 validate_board() {
     BOARD=$1
     case "${BOARD}" in
-        v2h-evk|v2l-evk|g2l-sbc|g2l-evk|g2l-100)
+        v2l-evk|v2h-evk|g2l-sbc|g2l-evk|g2l-100)
             return 0
             ;;
         *)
             echo "BOARD is not supported"
-            echo "Please use one of: v2h-evk, v2l-evk, g2l-evk, g2l-sbc, g2l-100"
-            echo "Example: ./all_build.sh v2h-evk"
+            echo "Please use one of: v2l-evk, v2h-evk, g2l-evk, g2l-sbc, g2l-100"
             echo "Example: ./all_build.sh v2l-evk"
+            echo "Example: ./all_build.sh v2h-evk"
             echo "Example: ./all_build.sh g2l-evk"
             echo "Example: ./all_build.sh g2l-sbc"
             echo "Example: ./all_build.sh g2l-100"

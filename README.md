@@ -26,34 +26,34 @@ sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 
 Run the following scripts to build the IPL binaries for each board.
 
-### RZPi
+### RZV2L-EVK
 
 ```bash
-./all_build.sh rzpi
+./all_build.sh v2l-evk
 ```
 
-### RZ/V2L
+### RZV2H-EVK1
 
 ```bash
-./all_build.sh v2l
+./all_build.sh v2h-evk
 ```
 
-### RZ/G2L
+### RZG2L-EVK
 
 ```bash
-./all_build.sh g2l
+./all_build.sh g2l-evk
 ```
 
-### RZ/G2L-100
+### RZG2L-SBC
 
 ```bash
-./all_build.sh g2l100
+./all_build.sh g2l-sbc
 ```
 
-### RZ/V2H
+### RZG2L-100
 
 ```bash
-./all_build.sh v2h
+./all_build.sh g2l-100
 ```
 
 ---
@@ -62,16 +62,6 @@ Run the following scripts to build the IPL binaries for each board.
 
 Use `write_ipl.sh` to flash IPL over UART.
 
-### RZPi
-
-```bash
-./write_ipl.sh \
-  --serial_port /dev/ttyUSB0 \
-  --image_writer Flash_Writer_SCIF_rzg2l-sbc.mot \
-  --image_bl2 bl2_bp_rzpi.srec \
-  --image_fip fip_rzpi.srec
-```
-
 ### RZ/V2L
 
 ```bash
@@ -79,27 +69,8 @@ Use `write_ipl.sh` to flash IPL over UART.
   --serial_port /dev/ttyUSB0 \
   --image_writer Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot \
   --image_bl2 bl2_bp_v2l.srec \
-  --image_fip fip_v2l.srec
-```
-
-### RZ/G2L
-
-```bash
-./write_ipl.sh \
-  --serial_port /dev/ttyUSB0 \
-  --image_writer Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot \
-  --image_bl2 bl2_bp_g2l.srec \
-  --image_fip fip_g2l.srec
-```
-
-### RZ/G2L-100
-
-```bash
-./write_ipl.sh \
-  --serial_port /dev/ttyUSB0 \
-  --image_writer Flash_Writer_SCIF_RZG2L_15MMSQ_DEV_DDR4_4GB.mot \
-  --image_bl2 bl2_bp_g2l-100.srec \
-  --image_fip fip_g2l-100.srec
+  --image_fip fip_v2l.srec \
+  --image_boardID v2l-evk-platform-settings.srec
 ```
 
 ### RZ/V2H - Burn to SD card
@@ -111,6 +82,39 @@ sudo sync /dev/sdX
 sudo dd if=bl2_bp_esd_v2h.bin of=/dev/sdX bs=512 seek=1 conv=notrunc
 sudo dd if=fip_v2h.bin of=/dev/sdX bs=512 seek=768 conv=notrunc
 sudo sync /dev/sdX
+```
+
+### RZG2L-EVK
+
+```bash
+./write_ipl.sh \
+  --serial_port /dev/ttyUSB0 \
+  --image_writer Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot \
+  --image_bl2 bl2_bp_g2l.srec \
+  --image_fip fip_g2l.srec \
+  --image_boardID g2l-evk-platform-settings.srec
+```
+
+### RZG2L-SBC
+
+```bash
+./write_ipl.sh \
+  --serial_port /dev/ttyUSB0 \
+  --image_writer Flash_Writer_SCIF_rzg2l-sbc.mot \
+  --image_bl2 bl2_bp_rzpi.srec \
+  --image_fip fip_rzpi.srec \
+  --image_boardID g2l-sbc-platform-settings.srec
+```
+
+### RZG2L-100
+
+```bash
+./write_ipl.sh \
+  --serial_port /dev/ttyUSB0 \
+  --image_writer Flash_Writer_SCIF_RZG2L_15MMSQ_DEV_DDR4_4GB.mot \
+  --image_bl2 bl2_bp_g2l-100.srec \
+  --image_fip fip_g2l-100.srec \
+  --image_boardID g2l-100-platform-settings.srec
 ```
 
 ---

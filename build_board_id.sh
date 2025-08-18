@@ -39,7 +39,7 @@ build_board_id()
     echo "Board ID for ${MODEL} has been built successfully."
     objcopy -I binary -O srec --adjust-vma=0x00000 --srec-forceS3 ${MODEL}.bin ${MODEL}.srec
     echo "Board ID for ${MODEL} has been converted to SREC format."
-    cp ${MODEL}.srec ${WORKPWD}
+    cp ${MODEL}.srec ${WORKPWD}/${BOARD}-platform-settings.srec
 }
 
 function main_process(){
