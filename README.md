@@ -62,17 +62,6 @@ Run the following scripts to build the IPL binaries for each board.
 
 Use `write_ipl.sh` to flash IPL over UART.
 
-### RZ/V2L
-
-```bash
-./write_ipl.sh \
-  --serial_port /dev/ttyUSB0 \
-  --image_writer Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot \
-  --image_bl2 bl2_bp_v2l-evk.srec \
-  --image_fip fip_v2l-evk.srec \
-  --image_boardID v2l-evk-platform-settings.srec
-```
-
 ### RZ/V2H - Burn to SD card
 
 ```bash
@@ -83,6 +72,18 @@ sudo dd if=bl2_bp_esd_v2h.bin of=/dev/sdX bs=512 seek=1 conv=notrunc
 sudo dd if=fip_v2h.bin of=/dev/sdX bs=512 seek=768 conv=notrunc
 sudo sync /dev/sdX
 ```
+
+### RZ/V2L-EVK
+
+```bash
+./write_ipl.sh \
+  --serial_port /dev/ttyUSB0 \
+  --image_writer Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot \
+  --image_bl2 bl2_bp_v2l-evk.srec \
+  --image_fip fip_v2l-evk.srec \
+  --image_boardID v2l-evk-platform-settings.srec
+```
+
 
 ### RZG2L-EVK
 
