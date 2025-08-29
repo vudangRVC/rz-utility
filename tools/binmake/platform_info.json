@@ -115,7 +115,7 @@
         "kernel_dtb_desc": ["48000000"]
     },
     "RZG2L-100": {
-        "model_id": 16,
+        "model_id": 64,
         "revision_minor": 1,
         "revision_major": 20,
         "model_string": "RZ/G2L-100",
