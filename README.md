@@ -73,56 +73,36 @@ sudo dd if=fip_v2h.bin of=/dev/sdX bs=512 seek=768 conv=notrunc
 sudo sync /dev/sdX
 ```
 
-### RZ/V2L-EVK
+### RZV2L-EVK
 
 ```bash
-./write_ipl.sh \
-  --serial_port /dev/ttyUSB0 \
-  --image_writer Flash_Writer_SCIF_RZV2L_SMARC_PMIC_DDR4_2GB_1PCS.mot \
-  --image_bl2 bl2_bp_v2l-evk.srec \
-  --image_fip fip_v2l-evk.srec \
-  --image_boardID v2l-evk-platform-settings.srec
+./write_ipl.sh v2l-evk
 ```
 
 
 ### RZG2L-EVK
 
 ```bash
-./write_ipl.sh \
-  --serial_port /dev/ttyUSB0 \
-  --image_writer Flash_Writer_SCIF_RZG2L_SMARC_PMIC_DDR4_2GB_1PCS.mot \
-  --image_bl2 bl2_bp_g2l-evk.srec \
-  --image_fip fip_g2l-evk.srec \
-  --image_boardID g2l-evk-platform-settings.srec
+./write_ipl.sh g2l-evk
 ```
 
 ### RZG2L-SBC
 
 ```bash
-./write_ipl.sh \
-  --serial_port /dev/ttyUSB0 \
-  --image_writer Flash_Writer_SCIF_rzg2l-sbc.mot \
-  --image_bl2 bl2_bp_g2l-sbc.srec \
-  --image_fip fip_g2l-sbc.srec \
-  --image_boardID g2l-sbc-platform-settings.srec
+./write_ipl.sh g2l-sbc
 ```
 
 ### RZG2L-100
 
 ```bash
-./write_ipl.sh \
-  --serial_port /dev/ttyUSB0 \
-  --image_writer Flash_Writer_SCIF_RZG2L_15MMSQ_DEV_DDR4_4GB.mot \
-  --image_bl2 bl2_bp_g2l-100.srec \
-  --image_fip fip_g2l-100.srec \
-  --image_boardID g2l-100-platform-settings.srec
+./write_ipl.sh g2l-100
 ```
 
 ---
 
 ## Notes
 
-- Make sure the correct USB-to-Serial device (`/dev/ttyUSBx`) is selected.
+- The correct USB-to-Serial device (`/dev/ttyUSB0`) is default selected.
 - The flash writer `.mot` files and `.srec` binaries must be generated or placed in the working directory.
 - If you're flashing multiple boards, disconnect/reconnect the USB cable to reset the serial connection as needed.
 
